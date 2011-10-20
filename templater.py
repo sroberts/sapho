@@ -24,9 +24,11 @@ class Templater(object):
     lipsum_word = "Lorem ipsum"
     
     
-    def generateSetPageTemplate(page_):
+    def generateSetPageTemplate(pagename):
         wikitext = "====== Summary ======\n"
         wikitext += "%s" % lipsum
+        wikitext += "==== Hypotheses ====\n"
+        wikitext += "  * [[https://localhost/ach/%s|%s]]" % (hypothesispath, hypothesisname)
         
         wikitext += "====== Compromise Vector & Persistence ======\n"
         wikitext += "==== Compromise Vector ====\n"
@@ -37,13 +39,13 @@ class Templater(object):
         
         wikitext += "====== Detection =====\n"
         wikitext += "==== ArcSight Content ====\n"
-        wikitext += "  *%s" % lipsum_short
+        wikitext += "  * %s" % lipsum_short
         
         wikitext += "==== Netwitness Content ====\n"
-        wikitext += "  *%s" % lipsum_short
+        wikitext += "  * %s" % lipsum_short
         
         wikitext += "==== Open Tickets ====\n"
-        wikitext += "  *%s" % lipsum_short
+        wikitext += "  * %s" % lipsum_short
         
         wikitext += "===== Indicators =====\n"
         wikitext += "==== Known Compromised Hosts ====\n"
@@ -74,7 +76,7 @@ class Templater(object):
         wikitext += "^ Filename ^ Type ^ Size ^ MD5 ^ SSDeep ^ File ^ Report ^ Notes ^\n"
         wikitext += "|          |      |      |     |        |      |        |       |\n"
         
-        return wikitext
+        return [pagename, wikitext]
     
     def generateWikiStartTemplate():
         wikitext = "====== Summary ======\n"
