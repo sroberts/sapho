@@ -12,10 +12,8 @@ import getopt
 
 
 help_message = '''
-The help message goes here.
+Sapho Templater is for automatically generating, populating, and posting Sapho wiki pages to a Dokuwiki implimentation. This takes a lot of the pain out of generating a new page.
 '''
-
-
 
 class Templater(object):
     # Filler text pulled from http://www.lipsum.com
@@ -23,8 +21,8 @@ class Templater(object):
     lipsum_short = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     lipsum_word = "Lorem ipsum"
     
-    
-    def generateSetPageTemplate(pagename):
+    # Major Page Types
+    def generateSetPage(pagename):
         wikitext = "====== Summary ======\n"
         wikitext += "%s" % lipsum
         wikitext += "==== Hypotheses ====\n"
@@ -76,7 +74,7 @@ class Templater(object):
         wikitext += "^ Filename ^ Type ^ Size ^ MD5 ^ SSDeep ^ File ^ Report ^ Notes ^\n"
         wikitext += "|          |      |      |     |        |      |        |       |\n"
         
-        return [pagename, wikitext]
+        return [intrusion:pagename, wikitext]
     
     def generateWikiStartTemplate():
         wikitext = "====== Summary ======\n"
@@ -132,7 +130,41 @@ class Templater(object):
         wikitext += "  * [[template:Attacker Tool Page Template]]\n"
         
         return wikitext
-
+    
+    def generateThirdPartyIntelligencePage(self):
+        """docstring for generateThirdPartyIntelligencePage"""
+        pass
+    
+    def generateExploitPage(self):
+        """docstring for generateExploitPage"""
+        pass
+    
+    def generateImplantsPage(self):
+        """docstring for generateImplantsPage"""
+        pass
+    def generateUtilitiesPage(self):
+        """docstring for generateUtilitiesPage"""
+        pass
+    def generateSaphoToolPage(self):
+        """docstring for generateSaphoToolPage"""
+        pass
+    
+    def generateKnownThreatGroupPage(self):
+        """docstring for generateKnownThreatGroupPage"""
+        pass
+    
+    def generateKnownThreatActorPage(self):
+        """docstring for generateKnownThreatActorPage"""
+        pass
+    
+    # Common Elements
+    def generateNewsArticle(title=lipsum_short, author=lipsum_word, date="20000101", url="hxxp://www.example.com/article", article_body=lipsum):
+        wikitext = "==== %s ====" % title
+        wikitext += "^ Author | %s |" % author
+        wikitext += "^ Date   | %s |" % date
+        wikitext += "^ URL    | %s |" % url
+        
+        wikitext += "> %s" % article_body
 
 class Usage(Exception):
     def __init__(self, msg):
@@ -157,8 +189,36 @@ def main(argv=None):
             if option in ("p", "--name"):
                 output = value
     
-        print generateSetPageTemplate()
+        "==== %s ====" % (title)
+        "^ Author | %s |" % (author)
+        "^ Date   | %s |" % (date)
+        "^ URL    | %s |" % (url)
+        
+        for line in artcile_body.split"\n":
+            print "> %s" % line
     
+    def postAsPage(self, pagename, wikitext):
+        """docstring for postAsPage"""
+        pass
+
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+    try:
+        try:
+            opts, args = getopt.getopt(argv[1:], "ho:v", ["help", "output="])
+        except getopt.error, msg:
+            raise Usage(msg)
+        
+        # option processing
+        for option, value in opts:
+            if option == "-v":
+                verbose = True
+            if option in ("-h", "--help"):
+                raise Usage(help_message)
+            if option in ("-o", "--output"):
+                output = value
+            
     except Usage, err:
         print >> sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg)
         print >> sys.stderr, "\t for help use --help"
