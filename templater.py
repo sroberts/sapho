@@ -185,7 +185,7 @@ class Templater(object):
         return wikitext
     
     # Common Elements
-    def generateNewsArticle(title=lipsum_short, author=lipsum_word, date="20000101", url="hxxp://www.example.com/article", article_body=lipsum):
+    def generateNewsArticle(self, title=lipsum_short, author=lipsum_word, date="20000101", url="hxxp://www.example.com/article", article_body=lipsum):
         wikitext = "==== %s ====" % title
         wikitext += "^ Author | %s |" % author
         wikitext += "^ Date   | %s |" % date
@@ -223,6 +223,30 @@ def main(argv=None):
         
         for line in artcile_body.split"\n":
             print "> %s" % line
+    
+    
+    def generateCookie(self, cookie_identifier = lipsum_word, browser_name = lipsum_word, browser_version = lipsum_word, username = lipsum_word, hostname = lipsum_word, cookie_path = lipsum_word, cookie_name = lipsum_word, cookie_value = lipsum_word, file_name = lipsum_word, file_path = lipsum_word, is_secure = lipsum_word, is_http_only = lipsum_word, creation_date = lipsum_word, expiration_date = lipsum_word, last_accessed_date = lipsum_word, last_modified_date = lipsum_word, cookie_flags = lipsum_word):
+        """docstring for generateCookie"""
+        wikitext = ""
+        wikitext += " ^ BrowserName        | %s |" % (browser_name)
+        wikitext += " ^ BrowserVersion     | %s |" % (browser_version)
+        wikitext += " ^ Username           | %s |" % (username)
+        wikitext += " ^ Host Name          | %s |" % (hostname)
+        wikitext += " ^ Cookie Path        | %s |" % (cookie_path)
+        wikitext += " ^ Cookie Name        | %s |" % (cookie_name)
+        wikitext += " ^ Cookie Value       | %s |" % (cookie_value)
+        wikitext += " ^ File Name          | %s |" % (file_name)
+        wikitext += " ^ File Path          | %s |" % (file_path)
+        wikitext += " ^ Is Secure          | %s |" % (is_secure)
+        wikitext += " ^ Is Http Only       | %s |" % (is_http_only)
+        wikitext += " ^ Creation Date      | %s |" % (creation_date)
+        wikitext += " ^ Expiration Date    | %s |" % (expiration_date)
+        wikitext += " ^ Last Accessed Date | %s |" % (last_accessed_date)
+        wikitext += " ^ Last Modified Date | %s |" % (last_modified_date)
+        wikitext += " ^ Cookie Flags       | %s |" % (cookie_flags)
+        
+        return [cookie_identifier, wikitext]
+    
     
     def postAsPage(self, pagename, wikitext):
         """docstring for postAsPage"""
