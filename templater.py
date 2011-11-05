@@ -126,6 +126,7 @@ class Templater(object):
         wikitext += "  * [[actor:Person Bravo]]\n"
         
         wikitext += "====== Templates ======\n"
+        wikitext += "  * [[template:Set Page Template]]\n"
         wikitext += "  * [[template:Compromise Page Template]]\n"
         wikitext += "  * [[template:Attacker Tool Page Template]]\n"
         
@@ -153,9 +154,35 @@ class Templater(object):
         """docstring for generateKnownThreatGroupPage"""
         pass
     
-    def generateKnownThreatActorPage(self):
-        """docstring for generateKnownThreatActorPage"""
-        pass
+    def generateKnownThreatActorPage(self, actor_identifier=lipsum_word, date_audited="01/01/2000", given_name=lipsum_word, date_of_birth="01/01/2001", country_of_birth=lipsum_word, location=lipsum_word age="00", names_aliases = [lipsum_word, lipsum_word, lipsum_word], email_addresses = [lipsum_word, lipsum_word, lipsum_word], social_media_sites = ["twitter", "facebook", "linkedin"]):
+        """Allows programatic generation of a page of a thrat actor. If no factors are given this generates a template page with dummy values."""
+        wikitext = "====== %s ======" % actor_identifier
+        wikitext += "^ Date Audited | %s |" % date_audited
+        wikitext += "^ Name | %s |" % given_name
+        wikitext += "^ DOB | %s |" % date_of_birth
+        wikitext += "^ Country of Birth | %s |" % country_of_birth
+        wikitext += "^ Location | %s |" % location
+        wikitext += "^ Age | %s |" % age
+        
+        wikitext += "===== Names/Aliases ====="
+        for name_alias in names_aliases:
+            wikitext += "  * %s" % name_alias
+        
+        wikitext += "===== Email Addresses ====="
+        for email_address in email_addresses:
+            wikitext += "  * %s" % email_address
+        
+        wikitext += "===== Social Media Sites ====="
+        """Ideally would be formatted as tables. First version will be formatted as bullets."""
+        wikitext += "^ IM Names | %s |" % date_audited
+        wikitext += "^ Site/group Affiliation | %s |" % date_audited
+        wikitext += "^ URLs | %s |" % date_audited
+        wikitext += "^ Domain Data | %s |" % date_audited
+        wikitext += "===== Screen Shots ====="
+        wikitext += "===== Tools Used =====" 
+        wikitext += "^ Google Searches and Links | %s |" % date_audited
+        
+        return wikitext
     
     # Common Elements
     def generateNewsArticle(title=lipsum_short, author=lipsum_word, date="20000101", url="hxxp://www.example.com/article", article_body=lipsum):
