@@ -191,42 +191,12 @@ class Templater(object):
         wikitext += "^ Date   | %s |" % date
         wikitext += "^ URL    | %s |" % url
         
-        wikitext += "> %s" % article_body
-
-class Usage(Exception):
-    def __init__(self, msg):
-        self.msg = msg
-
-
-def main(argv=None):
-    if argv is None:
-        argv = sys.argv
-    try:
-        try:
-            opts, args = getopt.getopt(argv[1:], "hp:v", ["help", "name="])
-        except getopt.error, msg:
-            raise Usage(msg)
-    
-        # option processing
-        for option, value in opts:
-            if option == "-v":
-                verbose = True
-            if option in ("-h", "--help"):
-                raise Usage(help_message)
-            if option in ("p", "--name"):
-                output = value
-    
-        "==== %s ====" % (title)
-        "^ Author | %s |" % (author)
-        "^ Date   | %s |" % (date)
-        "^ URL    | %s |" % (url)
-        
-        for line in artcile_body.split"\n":
+        for line in artcile_body.split("\n"):
             print "> %s" % line
     
     
     def generateCookie(self, cookie_identifier = lipsum_word, browser_name = lipsum_word, browser_version = lipsum_word, username = lipsum_word, hostname = lipsum_word, cookie_path = lipsum_word, cookie_name = lipsum_word, cookie_value = lipsum_word, file_name = lipsum_word, file_path = lipsum_word, is_secure = lipsum_word, is_http_only = lipsum_word, creation_date = lipsum_word, expiration_date = lipsum_word, last_accessed_date = lipsum_word, last_modified_date = lipsum_word, cookie_flags = lipsum_word):
-        """docstring for generateCookie"""
+        """Generates text for a cookie."""
         wikitext = ""
         wikitext += " ^ BrowserName        | %s |" % (browser_name)
         wikitext += " ^ BrowserVersion     | %s |" % (browser_version)
