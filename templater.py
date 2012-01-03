@@ -14,12 +14,43 @@ import getopt
 help_message = '''
 Sapho Templater is for automatically generating, populating, and posting Sapho wiki pages to a Dokuwiki implimentation. This takes a lot of the pain out of generating a new page.
 '''
+# Filler text pulled from http://www.lipsum.com
+lipsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+lipsum_short = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+lipsum_word = "Lorem ipsum"
 
-class Templater(object):
-    # Filler text pulled from http://www.lipsum.com
-    lipsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    lipsum_short = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    lipsum_word = "Lorem ipsum"
+# Indicator Classes
+class Indicator_ArpEntryItem(object):
+	"""Based on Mandiant's OpenIOC XML specification. Address Resolution Protocol (ARP) is a telecommunications protocol used for resolution of network layer addresses into link layer addresses, a critical function in multiple-access networks. (Wikipedia: http://en.wikipedia.org/wiki/Address_Resolution_Protocol). TODO: Add generation of table header and single rows."""
+	
+	physicalAddress = lipsum_word
+	iPv4Address = "127.0.0.1"
+	iPv6Address = "::1"
+	interface = lipsum_word
+	interfaceType = lipsum_word
+	state = lipsum_word
+	cache = lipsum_word
+	isRouter = False
+	lastReachable = "01/01/2001 00:00:00"
+	lastUnreachable = "01/01/2001 00:00:00"
+	
+	def __init__(self, arg):
+		super(Indicator_ArpEntryItem, self).__init__()
+		self.arg = arg
+		
+	def generateDefaultWikiTemplate(self):
+		"""docstring for generateWikiTemplate"""
+		wikitext = ""
+		wikitext = "^ Physical Address ^ IPV4 Address ^ IPV6 Address ^ Interface ^ Interface Type ^ State ^ Cache ^ Router ^ Last Reachable ^ Last Unreachable ^ "
+		wikitext = "| %s               | %s           | %s           | %s        | %s             | %s    | %s    | %s     | %s             | %s               | " % (physicalAddress, iPv4Address, iPv6Address, interface, interfaceType, state, cache, str(isRouter), lastReachable, lastUnreachable)
+		
+		return wikitext
+
+	
+# Wiki Classes
+class WikiTemplater(object):
+    doku_username = "sapho"
+    doku_password = "sapho_password"
     
     # Major Page Types
     def generateSetPage(pagename):
@@ -157,12 +188,12 @@ class Templater(object):
     def generateKnownThreatActorPage(self, actor_identifier=lipsum_word, date_audited="01/01/2000", given_name=lipsum_word, date_of_birth="01/01/2001", country_of_birth=lipsum_word, location=lipsum_word age="00", names_aliases = [lipsum_word, lipsum_word, lipsum_word], email_addresses = [lipsum_word, lipsum_word, lipsum_word], social_media_sites = ["twitter", "facebook", "linkedin"]):
         """Allows programatic generation of a page of a thrat actor. If no factors are given this generates a template page with dummy values."""
         wikitext = "====== %s ======" % actor_identifier
-        wikitext += "^ Date Audited | %s |" % date_audited
-        wikitext += "^ Name | %s |" % given_name
-        wikitext += "^ DOB | %s |" % date_of_birth
+        wikitext += "^ Date Audited     | %s |" % date_audited
+        wikitext += "^ Name             | %s |" % given_name
+        wikitext += "^ DOB              | %s |" % date_of_birth
         wikitext += "^ Country of Birth | %s |" % country_of_birth
-        wikitext += "^ Location | %s |" % location
-        wikitext += "^ Age | %s |" % age
+        wikitext += "^ Location         | %s |" % location
+        wikitext += "^ Age              | %s |" % age
         
         wikitext += "===== Names/Aliases ====="
         for name_alias in names_aliases:
@@ -184,7 +215,14 @@ class Templater(object):
         
         return wikitext
     
-    # Common Elements
+    # Common Elements Generators
+    
+    # Indicators
+    def generateArpEntryIndicator( interface = lipsum, physicalAddress = lipsum, iPv6Address = lipsum
+                                  iPv4Address = lipsum, cache = lipsum, interfaceType = lipsum, state = lipsum, isRouter = False, lastReachable = "01/01/2001 00:00:00", lastUnreachable = "01/01/2001 00:00:00"):
+        wikitext = ""
+    
+    
     def generateNewsArticle(self, title=lipsum_short, author=lipsum_word, date="20000101", url="hxxp://www.example.com/article", article_body=lipsum):
         wikitext = "==== %s ====" % title
         wikitext += "^ Author | %s |" % author
@@ -195,7 +233,7 @@ class Templater(object):
             print "> %s" % line
     
     
-    def generateCookie(self, cookie_identifier = lipsum_word, browser_name = lipsum_word, browser_version = lipsum_word, username = lipsum_word, hostname = lipsum_word, cookie_path = lipsum_word, cookie_name = lipsum_word, cookie_value = lipsum_word, file_name = lipsum_word, file_path = lipsum_word, is_secure = lipsum_word, is_http_only = lipsum_word, creation_date = lipsum_word, expiration_date = lipsum_word, last_accessed_date = lipsum_word, last_modified_date = lipsum_word, cookie_flags = lipsum_word):
+    def generateCookieIndicator(self, cookie_identifier = lipsum_word, browser_name = lipsum_word, browser_version = lipsum_word, username = lipsum_word, hostname = lipsum_word, cookie_path = lipsum_word, cookie_name = lipsum_word, cookie_value = lipsum_word, file_name = lipsum_word, file_path = lipsum_word, is_secure = lipsum_word, is_http_only = lipsum_word, creation_date = lipsum_word, expiration_date = lipsum_word, last_accessed_date = lipsum_word, last_modified_date = lipsum_word, cookie_flags = lipsum_word):
         """Generates text for a cookie."""
         wikitext = ""
         wikitext += " ^ BrowserName        | %s |" % (browser_name)
@@ -215,7 +253,11 @@ class Templater(object):
         wikitext += " ^ Last Modified Date | %s |" % (last_modified_date)
         wikitext += " ^ Cookie Flags       | %s |" % (cookie_flags)
         
-        return [cookie_identifier, wikitext]
+        if cookie_identifier != lipsum_word:
+            return [cookie_identifier, wikitext]
+        else:
+            print "Error: No identifier given to cookie."
+            return [cookie_identifier, wikitext]
     
     
     def postAsPage(self, pagename, wikitext):
