@@ -9,14 +9,16 @@ Copyright (c) 2011 TogaFoamParty Studios. All rights reserved.
 
 import sys
 import getopt
+import datetime
 
 help_message = '''
 Sapho Templater is for automatically generating, populating, and posting Sapho wiki pages to a Dokuwiki implimentation. This takes a lot of the pain out of generating a new page.
 '''
-# Filler text pulled from http://www.lipsum.com
+# Filler text pulled from http://www.lipsum.com except date
 lipsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 lipsum_short = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 lipsum_word = "Lorem ipsum"
+lipsum_date = "19990101" #sample date in YYYYMMDD format
 	
 # Wiki Classes
 class WikiTemplater(object):
@@ -134,20 +136,132 @@ class WikiTemplater(object):
         
         return wikitext
     
-    def generateThirdPartyIntelligencePage(self):
+    def generateThirdPartyIntelligencePage(self, filename="example.file", tipDate=datetime.date.today(), analystName=lipsum_word, data=lipsum, indicators = [lipsum_word, lipsum_word]):
         """docstring for generateThirdPartyIntelligencePage"""
-        pass
+        wikitext += ""
+		wikitext += "====== Metadata ======"
+		wikitext += "**File:** //%s//" % (filename)
+		
+		wikitext += "**Date:** %s" % (tipdate)
+
+		wikitext += "**Analyst:** %s" % (analystName)
+
+		wikitext += "====== Data ======"
+		wikitext += "%s" % (data)
+
+		wikitext += "====== Indicators ======"
+		for indicator in indicators:
+			wikitext += "  * %s" % (indicator)
+		
+		return wikitext	
     
     def generateExploitPage(self):
         """docstring for generateExploitPage"""
         pass
     
-    def generateImplantsPage(self):
+    def generateImplantsPage(self, intrusionSet="Alpha Alpha", filename="Example.file", filetype="example", fileSize=0000, md5sum="d41d8cd98f00b204e9800998ecf8427e", sha="da39a3ee5e6b4b0d3255bfef95601890afd80709", ssdeep="3::", analystName=lipsum_word, summary=lipsum, avDefs = {"Symantec": "none", "McAfee":"none"}, filehooking=[lipsum_short, lipsum_short], persistence=[lipsum_short, lipsum_short], spreading_mechs=[lipsum_short, lipsum_short], exfil_mechs=[lipsum_short, lipsum_short], c2_mechs=[lipsum_short, lipsum_short], oss=[lipsum_short, lipsum_short], requiredfiles=[lipsum_short, lipsum_short], secondstages=[lipsum_short, lipsum_short], regkeys=[lipsum_short, lipsum_short], behav_summary=lipsum, logs=[lipsum_short, lipsum_short], strings=[lipsum_short, lipsum_short], other=[lipsum_short, lipsum_short], network_indicators=[lipsum_short, lipsum_short], fs_indicators=[lipsum_short, lipsum_short], mitigation_steps=[lipsum_short, lipsum_short], eradication_steps=[lipsum_short, lipsum_short]):
         """docstring for generateImplantsPage"""
-        pass
+        
+		wikitext += "**Implant Report:** //%s/////%s// (//%s//)" % (intrusionSet, filename, md5sum)
+
+		wikitext += "**Reverse Engineer:** %s" % (analystName)
+
+		wikitext += "**Date:** %s" % (date)
+
+		wikitext += "**Associated FO Set:** %s" % (intrusionSet)
+
+		wikitext += "===== Summary of the Analysis: ====="
+		wikitext += "%s" % (summary)
+
+		wikitext += "===== Identification ====="
+		wikitext += "^ File Name | %s |" % (filename)
+		wikitext += "^ File Type | %s |" % (filetype)
+		wikitext += "^ File Size | %s |" % (str(filesize))
+		wikitext += "^ MD5       | %s |" % (md5)
+		wikitext += "^ SHA       | %s |" % (sha)
+		wikitext += "^ Ssdeep    | %s |" % (ssdeep) 
+
+		wikitext += "====Current anti-virus detection capabilities:===="
+		for vendor in avDefs:
+			wikitext += "^ %s | %s |" % (vendor, avDefs[vendor])
+
+		wikitext += "===== Characteristics ====="
+		wikitext += "==== File Hooking ===="
+		for filehook in filehooking:
+			wikitext += "  * %s" % (filehook)
+
+		wikitext += "==== Persistence Mechanisms ===="
+		for persistance_mech in persistence:
+			wikitext += "  * %s" % (persistance_mech)
+
+		wikitext += "==== Spreading Mechanisms ===="
+		for spreading_mech in spreading_mechs:
+			wikitext += "  * %s" % (spreading_mech)
+
+		wikitext += "==== Exfiltration Mechanisms ===="
+		for exfil_mech in exfil_mechs:
+			wikitext += "  * %s" % (exfil_mech)
+
+		wikitext += "==== Command and Control Mechanisms ===="
+		for c2_mech in c2mechs:
+			wikitext += "  * %s " % (c2_mech)
+
+		wikitext += "===== Dependencies ====="
+		wikitext += "==== Supported Operating Systems ===="
+		for os in oss:
+			wikitext += "  * %s " % (os)
+
+		wikitext += "==== Required Files ===="
+		for requiredfile in requiredfiles:
+			wikitext += "  * %s " % (requiredfile)
+
+		wikitext += "==== Second Stage Downloads ===="
+		for secondstage in secondstages:
+			wikitext += "  * %s " % (secondstage)
+
+		wikitext += "==== Registry Keys ===="
+		for regkey in regkeys:
+			wikitext += "  * %s " % (regkeys)
+
+		wikitext += "===== Behavioral and code analysis findings ====="
+		wikitext += "//%s//" % (behav_summary)
+
+		wikitext += "===== Supporting Figures ====="
+		wikitext += "==== Logs ===="
+		for log in logs:
+			wikitext += "  * %s" % (log)
+
+		wikitext += "==== Interesting Strings ===="
+		for string in strings:
+			wikitext += "  * %s" % (string)
+
+		wikitext += "==== Other Relevant Files or Data ===="
+		for oth in other:
+			wikitext += "  * %s" % (oth)
+
+		wikitext += "===== Incident Recommendations ====="
+		wikitext += "==== Network Indicators ===="
+		for network_indicator in network_indicators:
+			wikitext += "  * %s" % (network_indicator)
+
+		wikitext += "==== File System Indicators ===="
+		for fs_indicator in fs_indicators:
+			wikitext += "  * %s" % (fs_indicator)
+
+		wikitext += "==== Mitigation Steps ===="
+		for mitigation_step in mitigation_steps:
+			wikitext += "  * %s" % (mitigation_step)
+
+		wikitext += "==== Eradication Steps ===="
+		for eradication_step in eradication_steps:
+			wikitext += "  * %s" % (eradication_step)
+		
+		return wikitext
+	
     def generateUtilitiesPage(self):
         """docstring for generateUtilitiesPage"""
         pass
+	
     def generateSaphoToolPage(self):
         """docstring for generateSaphoToolPage"""
         pass
@@ -187,13 +301,7 @@ class WikiTemplater(object):
         return wikitext
     
     # Common Elements Generators
-    
-    # Indicators
-    def generateArpEntryIndicator( interface = lipsum, physicalAddress = lipsum, iPv6Address = lipsum
-                                  iPv4Address = lipsum, cache = lipsum, interfaceType = lipsum, state = lipsum, isRouter = False, lastReachable = "01/01/2001 00:00:00", lastUnreachable = "01/01/2001 00:00:00"):
-        wikitext = ""
-    
-    
+	
     def generateNewsArticle(self, title=lipsum_short, author=lipsum_word, date="20000101", url="hxxp://www.example.com/article", article_body=lipsum):
         wikitext = "==== %s ====" % title
         wikitext += "^ Author | %s |" % author
@@ -201,35 +309,9 @@ class WikiTemplater(object):
         wikitext += "^ URL    | %s |" % url
         
         for line in artcile_body.split("\n"):
-            print "> %s" % line
-    
-    
-    def generateCookieIndicator(self, cookie_identifier = lipsum_word, browser_name = lipsum_word, browser_version = lipsum_word, username = lipsum_word, hostname = lipsum_word, cookie_path = lipsum_word, cookie_name = lipsum_word, cookie_value = lipsum_word, file_name = lipsum_word, file_path = lipsum_word, is_secure = lipsum_word, is_http_only = lipsum_word, creation_date = lipsum_word, expiration_date = lipsum_word, last_accessed_date = lipsum_word, last_modified_date = lipsum_word, cookie_flags = lipsum_word):
-        """Generates text for a cookie."""
-        wikitext = ""
-        wikitext += " ^ BrowserName        | %s |" % (browser_name)
-        wikitext += " ^ BrowserVersion     | %s |" % (browser_version)
-        wikitext += " ^ Username           | %s |" % (username)
-        wikitext += " ^ Host Name          | %s |" % (hostname)
-        wikitext += " ^ Cookie Path        | %s |" % (cookie_path)
-        wikitext += " ^ Cookie Name        | %s |" % (cookie_name)
-        wikitext += " ^ Cookie Value       | %s |" % (cookie_value)
-        wikitext += " ^ File Name          | %s |" % (file_name)
-        wikitext += " ^ File Path          | %s |" % (file_path)
-        wikitext += " ^ Is Secure          | %s |" % (is_secure)
-        wikitext += " ^ Is Http Only       | %s |" % (is_http_only)
-        wikitext += " ^ Creation Date      | %s |" % (creation_date)
-        wikitext += " ^ Expiration Date    | %s |" % (expiration_date)
-        wikitext += " ^ Last Accessed Date | %s |" % (last_accessed_date)
-        wikitext += " ^ Last Modified Date | %s |" % (last_modified_date)
-        wikitext += " ^ Cookie Flags       | %s |" % (cookie_flags)
-        
-        if cookie_identifier != lipsum_word:
-            return [cookie_identifier, wikitext]
-        else:
-            print "Error: No identifier given to cookie."
-            return [cookie_identifier, wikitext]
-    
+            wikitext += "> %s" % line
+    	
+		return wikitext
     
     def postAsPage(self, pagename, wikitext):
         """docstring for postAsPage"""
