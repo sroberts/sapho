@@ -118,9 +118,6 @@ class WikiTemplater(object):
 		wikitext += "===== Utilities =====\n"
 		wikitext += "  * [[malcode:Alpha.util]] - Alpha.util summary.\n"
 		
-		wikitext += "====== Sapho Tools ======\n"
-		wikitext += "  * [[Sapho.util]] - Sapho.util summary.\n"
-		
 		wikitext += "====== Known Threat Actors ======\n"
 		wikitext += "===== Known Threat Groups =====\n"
 		wikitext += "  * [[actor:Actor Alpha]]\n"
@@ -137,21 +134,19 @@ class WikiTemplater(object):
 		return wikitext
 	
 	def generateThirdPartyIntelligencePage(self, filename="example.file", tipDate=datetime.date.today(), analystName=lipsum_word, data=lipsum, indicators = [lipsum_word, lipsum_word]):
-		"""docstring for generateThirdPartyIntelligencePage"""
+		"""Generates a page for adding any Third Party intelligence products to the wiki. May require some manipulation to add into wiki format."""
 		wikitext += ""
 		wikitext += "====== Metadata ======"
-		wikitext += "**File:** //%s//" % (filename)
+		wikitext += "^ File | %s\n" % (filename)
+		wikitext += "^ Date | %s\n" % (tipdate)
+		wikitext += "^ Analyst | %s\n" % (analystName)
 		
-		wikitext += "**Date:** %s" % (tipdate)
+		wikitext += "====== Data ======\n"
+		wikitext += "%s\n" % (data)
 		
-		wikitext += "**Analyst:** %s" % (analystName)
-		
-		wikitext += "====== Data ======"
-		wikitext += "%s" % (data)
-		
-		wikitext += "====== Indicators ======"
+		wikitext += "====== Indicators ======\n"
 		for indicator in indicators:
-			wikitext += "  * %s" % (indicator)
+			wikitext += "  * %s\n" % (indicator)
 		
 		return wikitext	
 	
@@ -351,7 +346,7 @@ class WikiTemplater(object):
 			
 		return wikitext
 	
-	def generateKnownThreatActorPage(self, actor_identifier=lipsum_word, date_audited="01/01/2000", given_name=lipsum_word, date_of_birth="01/01/2001", country_of_birth=lipsum_word, location=lipsum_word age="00", names_aliases = [lipsum_word, lipsum_word, lipsum_word], email_addresses = [lipsum_word, lipsum_word, lipsum_word], social_media_sites = ["twitter", "facebook", "linkedin"]):
+	def generateThreatActorPage(self, actor_identifier=lipsum_word, date_audited="01/01/2000", given_name=lipsum_word, date_of_birth="01/01/2001", country_of_birth=lipsum_word, location=lipsum_word age="00", names_aliases = [lipsum_word, lipsum_word, lipsum_word], email_addresses = [lipsum_word, lipsum_word, lipsum_word], social_media_sites = ["twitter", "facebook", "linkedin"]):
 		"""Allows programatic generation of a page of a thrat actor. If no factors are given this generates a template page with dummy values."""
 		wikitext = "====== %s ======" % actor_identifier
 		wikitext += "^ Date Audited	 | %s |" % date_audited
@@ -382,7 +377,6 @@ class WikiTemplater(object):
 		return wikitext
 	
 	# Common Elements Generators
-	
 	def generateNewsArticle(self, title=lipsum_short, author=lipsum_word, date="20000101", url="hxxp://www.example.com/article", article_body=lipsum):
 		wikitext = "==== %s ====" % title
 		wikitext += "^ Author | %s |" % author
@@ -394,6 +388,7 @@ class WikiTemplater(object):
 		
 		return wikitext
 	
+	# Wiki Methods
 	def postAsPage(self, pagename, wikitext):
 		"""docstring for postAsPage"""
 		pass
