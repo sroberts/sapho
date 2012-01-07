@@ -14,11 +14,12 @@ import datetime
 help_message = '''
 Sapho Templater is for automatically generating, populating, and posting Sapho wiki pages to a Dokuwiki implimentation. This takes a lot of the pain out of generating a new page.
 '''
-# Filler text pulled from http://www.lipsum.com except date
+# Filler text pulled from http://www.lipsum.com except date & url
 lipsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 lipsum_short = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 lipsum_word = "Lorem ipsum"
 lipsum_date = "19990101" #sample date in YYYYMMDD format
+lipsum_url = "http://www.example.com"
 	
 # Wiki Classes
 class WikiTemplater(object):
@@ -135,8 +136,7 @@ class WikiTemplater(object):
 	
 	def generateThirdPartyIntelligencePage(self, filename="example.file", tipDate=datetime.date.today(), analystName=lipsum_word, data=lipsum, indicators = [lipsum_word, lipsum_word]):
 		"""Generates a page for adding any Third Party intelligence products to the wiki. May require some manipulation to add into wiki format."""
-		wikitext += ""
-		wikitext += "====== Metadata ======"
+		wikitext = "====== Metadata ======"
 		wikitext += "^ File | %s\n" % (filename)
 		wikitext += "^ Date | %s\n" % (tipdate)
 		wikitext += "^ Analyst | %s\n" % (analystName)
@@ -151,7 +151,7 @@ class WikiTemplater(object):
 		return wikitext	
 	
 	def generateExploitPage(self, exploit_name=lipsum_word, date_exploit_identified=lipsum_date, date_exploit_public=lipsum_date, date_exploit_updated=lipsum_date, author=lipsum_word, actor=[[Alpha]], vuln_app=lipsum_word, vuln_mod=lipsum_word, vuln_ver="1.0", vuln_patch="N/A", mitigation=lipsum, edb=0000, cve="CVE-0000-0000", osvdb=0000, exploit_sources[lipsum_url,lipsum_url], notes=lipsum):
-		wikitext += "Name: %s" % exploit_name
+		wikitext = "Name: %s" % exploit_name
 		
 		wikitext += "===== Timeline ====="
 		wikitext += "^ Exploit Identified | %s" % date_exploit_identified
@@ -193,7 +193,7 @@ class WikiTemplater(object):
 	def generateImplantsPage(self, intrusionSet="Alpha Alpha", filename="Example.file", filetype="example", fileSize=0000, md5sum="d41d8cd98f00b204e9800998ecf8427e", sha="da39a3ee5e6b4b0d3255bfef95601890afd80709", ssdeep="3::", analystName=lipsum_word, summary=lipsum, avDefs = {"Symantec": "none", "McAfee":"none"}, filehooking=[lipsum_short, lipsum_short], persistence=[lipsum_short, lipsum_short], spreading_mechs=[lipsum_short, lipsum_short], exfil_mechs=[lipsum_short, lipsum_short], c2_mechs=[lipsum_short, lipsum_short], oss=[lipsum_short, lipsum_short], requiredfiles=[lipsum_short, lipsum_short], secondstages=[lipsum_short, lipsum_short], regkeys=[lipsum_short, lipsum_short], behav_summary=lipsum, logs=[lipsum_short, lipsum_short], strings=[lipsum_short, lipsum_short], other=[lipsum_short, lipsum_short], network_indicators=[lipsum_short, lipsum_short], fs_indicators=[lipsum_short, lipsum_short], mitigation_steps=[lipsum_short, lipsum_short], eradication_steps=[lipsum_short, lipsum_short]):
 		"""docstring for generateImplantsPage"""
 		
-		wikitext += "**Implant Report:** //%s/////%s// (//%s//)" % (intrusionSet, filename, md5sum)
+		wikitext = "**Implant Report:** //%s/////%s// (//%s//)" % (intrusionSet, filename, md5sum)
 		
 		wikitext += "**Reverse Engineer:** %s" % (analystName)
 		
