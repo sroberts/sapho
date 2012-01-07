@@ -137,7 +137,7 @@ class WikiTemplater(object):
 	
 	def generateThirdPartyIntelligencePage(self, filename="example.file", tipDate=datetime.date.today(), analystName=lipsum_word, data=lipsum, indicators = [lipsum_word, lipsum_word]):
 		"""Generates a page for adding any Third Party intelligence products to the wiki. May require some manipulation to add into wiki format."""
-		wikitext = "====== Metadata ======"
+		wikitext = "====== Metadata ======\n"
 		wikitext += "^ File | %s\n" % (filename)
 		wikitext += "^ Date | %s\n" % (tipdate)
 		wikitext += "^ Analyst | %s\n" % (analystName)
@@ -156,139 +156,139 @@ class WikiTemplater(object):
 	def generateExploitPage(self, exploit_name=lipsum_word, date_exploit_identified=lipsum_date, date_exploit_public=lipsum_date, date_exploit_updated=lipsum_date, author=lipsum_word, actor=[[Alpha]], vuln_app=lipsum_word, vuln_mod=lipsum_word, vuln_ver="1.0", vuln_patch="N/A", mitigation=lipsum, edb=0000, cve="CVE-0000-0000", osvdb=0000, exploit_sources[lipsum_url,lipsum_url], notes=lipsum):
 		wikitext = "Name: %s" % exploit_name
 		
-		wikitext += "===== Timeline ====="
-		wikitext += "^ Exploit Identified | %s" % date_exploit_identified
-		wikitext += "^ Public Exploit Published | %s" % date_exploit_public
-		wikitext += "^ Exploit Updated | %s" % date_exploit_updated
+		wikitext += "===== Timeline =====\n"
+		wikitext += "^ Exploit Identified | %s |\n" % date_exploit_identified
+		wikitext += "^ Public Exploit Published | %s |\n" % date_exploit_public
+		wikitext += "^ Exploit Updated | %s |\n" % date_exploit_updated
 		
-		wikitext += "===== Developer ====="
-		wikitext += "Author: %s" % author
-		wikitext += "Actor: %s" % actor
+		wikitext += "===== Developer =====\n"
+		wikitext += "Author: %s\n" % author
+		wikitext += "Actor: %s\n" % actor
 		
-		wikitext += "===== Vulnerable Systesm ====="
-		wikitext += "^ Vulnerable Application | %s" % vuln_app
-		wikitext += "^ Vulnerable Module | %s" % vuln_mod
-		wikitext += "^ Vulnerable Versions | %s" % vuln_ver
-		wikitext += "^ Vulnerable Languages | %s" % vuln_lang
-		wikitext += "^ Patch | %s" % str(vuln_patch)
+		wikitext += "===== Vulnerable Systesm =====\n"
+		wikitext += "^ Vulnerable Application | %s\n" % vuln_app
+		wikitext += "^ Vulnerable Module | %s\n" % vuln_mod
+		wikitext += "^ Vulnerable Versions | %s\n" % vuln_ver
+		wikitext += "^ Vulnerable Languages | %s\n" % vuln_lang
+		wikitext += "^ Patch | %s\n" % str(vuln_patch)
 		
-		wikitext += "===== Mitigation ====="
-		wikitext += "%s" % mitigation
+		wikitext += "===== Mitigation =====\n"
+		wikitext += "%s\n" % mitigation
 		
-		wikitext += "===== Files ====="
-		wikitext += "^ Delivery Code | FIXME Add files with upload dialog. |" 
-		wikitext += "^ Exploit Code | FIXME Add files with upload dialog. |"
+		wikitext += "===== Files =====\n"
+		wikitext += "^ Delivery Code | FIXME Add files with upload dialog. |\n" 
+		wikitext += "^ Exploit Code | FIXME Add files with upload dialog. |\n"
 		
-		wikitext += "===== References ====="
-		wikitext += "ExploitDB-ID: %s" % str(edb)
-		wikitext += "CVE: %s" % cve
-		wikitext += "OSVDB-ID: %s" % str(osvdb)
+		wikitext += "===== References =====\n"
+		wikitext += "ExploitDB-ID: %s\n" % str(edb)
+		wikitext += "CVE: %s\n" % cve
+		wikitext += "OSVDB-ID: %s\n" % str(osvdb)
 		
-		wikitext += "=== Exploit Sources ==="
+		wikitext += "=== Exploit Sources ===\n"
 		for exploit_source in exploit sources:
-			wikitext += "  * <nowiki>%s</nowiki>" % exploit_source 
+			wikitext += "  * <nowiki>%s</nowiki>\n" % exploit_source 
 			
-		wikitext += "===== Notes ====="
-		wikitext += "%s" % notes
+		wikitext += "===== Notes =====\n"
+		wikitext += "%s\n" % notes
 		
 		return wikitext
 	
 	def generateImplantsPage(self, intrusionSet="Alpha Alpha", filename="Example.file", filetype="example", fileSize=0000, md5sum="d41d8cd98f00b204e9800998ecf8427e", sha="da39a3ee5e6b4b0d3255bfef95601890afd80709", ssdeep="3::", analystName=lipsum_word, summary=lipsum, avDefs = {"Symantec": "none", "McAfee":"none"}, filehooking=[lipsum_short, lipsum_short], persistence=[lipsum_short, lipsum_short], spreading_mechs=[lipsum_short, lipsum_short], exfil_mechs=[lipsum_short, lipsum_short], c2_mechs=[lipsum_short, lipsum_short], oss=[lipsum_short, lipsum_short], requiredfiles=[lipsum_short, lipsum_short], secondstages=[lipsum_short, lipsum_short], regkeys=[lipsum_short, lipsum_short], behav_summary=lipsum, logs=[lipsum_short, lipsum_short], strings=[lipsum_short, lipsum_short], other=[lipsum_short, lipsum_short], network_indicators=[lipsum_short, lipsum_short], fs_indicators=[lipsum_short, lipsum_short], mitigation_steps=[lipsum_short, lipsum_short], eradication_steps=[lipsum_short, lipsum_short]):
 		"""docstring for generateImplantsPage"""
 		
-		wikitext = "**Implant Report:** //%s/////%s// (//%s//)" % (intrusionSet, filename, md5sum)
+		wikitext = "**Implant Report:** //%s/////%s// (//%s//)\n" % (intrusionSet, filename, md5sum)
 		
-		wikitext += "**Reverse Engineer:** %s" % (analystName)
+		wikitext += "**Reverse Engineer:** %s\n" % (analystName)
 		
-		wikitext += "**Date:** %s" % (date)
+		wikitext += "**Date:** %s\n" % (date)
 		
-		wikitext += "**Associated FO Set:** %s" % (intrusionSet)
+		wikitext += "**Associated FO Set:** %s\n" % (intrusionSet)
 		
-		wikitext += "===== Summary of the Analysis: ====="
-		wikitext += "%s" % (summary)
+		wikitext += "===== Summary of the Analysis: =====\n"
+		wikitext += "%s\n" % (summary)
 		
-		wikitext += "===== Identification ====="
-		wikitext += "^ File Name | %s |" % (filename)
-		wikitext += "^ File Type | %s |" % (filetype)
-		wikitext += "^ File Size | %s |" % (str(filesize))
-		wikitext += "^ MD5	   | %s |" % (md5)
-		wikitext += "^ SHA	   | %s |" % (sha)
-		wikitext += "^ Ssdeep	| %s |" % (ssdeep) 
+		wikitext += "===== Identification =====\n"
+		wikitext += "^ File Name | %s |\n" % (filename)
+		wikitext += "^ File Type | %s |\n" % (filetype)
+		wikitext += "^ File Size | %s |\n" % (str(filesize))
+		wikitext += "^ MD5	   | %s |\n" % (md5)
+		wikitext += "^ SHA	   | %s |\n" % (sha)
+		wikitext += "^ Ssdeep	| %s |\n" % (ssdeep) 
 		
-		wikitext += "====Current anti-virus detection capabilities:===="
+		wikitext += "====Current anti-virus detection capabilities:====\n"
 		for vendor in avDefs:
-			wikitext += "^ %s | %s |" % (vendor, avDefs[vendor])
+			wikitext += "^ %s | %s |\n" % (vendor, avDefs[vendor])
 			
-		wikitext += "===== Characteristics ====="
-		wikitext += "==== File Hooking ===="
+		wikitext += "===== Characteristics =====\n"
+		wikitext += "==== File Hooking ====\n"
 		for filehook in filehooking:
-			wikitext += "  * %s" % (filehook)
+			wikitext += "  * %s\n" % (filehook)
 			
-		wikitext += "==== Persistence Mechanisms ===="
+		wikitext += "==== Persistence Mechanisms ====\n"
 		for persistance_mech in persistence:
-			wikitext += "  * %s" % (persistance_mech)
+			wikitext += "  * %s\n" % (persistance_mech)
 			
-		wikitext += "==== Spreading Mechanisms ===="
+		wikitext += "==== Spreading Mechanisms ====\n"
 		for spreading_mech in spreading_mechs:
-			wikitext += "  * %s" % (spreading_mech)
+			wikitext += "  * %s\n" % (spreading_mech)
 			
-		wikitext += "==== Exfiltration Mechanisms ===="
+		wikitext += "==== Exfiltration Mechanisms ====\n"
 		for exfil_mech in exfil_mechs:
-			wikitext += "  * %s" % (exfil_mech)
+			wikitext += "  * %s\n" % (exfil_mech)
 			
-		wikitext += "==== Command and Control Mechanisms ===="
+		wikitext += "==== Command and Control Mechanisms ====\n"
 		for c2_mech in c2mechs:
-			wikitext += "  * %s " % (c2_mech)
+			wikitext += "  * %s\n" % (c2_mech)
 			
-		wikitext += "===== Dependencies ====="
-		wikitext += "==== Supported Operating Systems ===="
+		wikitext += "===== Dependencies =====\n"
+		wikitext += "==== Supported Operating Systems ====\n"
 		for os in oss:
-			wikitext += "  * %s " % (os)
+			wikitext += "  * %s\n" % (os)
 			
-		wikitext += "==== Required Files ===="
+		wikitext += "==== Required Files ====\n"
 		for requiredfile in requiredfiles:
-			wikitext += "  * %s " % (requiredfile)
+			wikitext += "  * %s\n" % (requiredfile)
 			
-		wikitext += "==== Second Stage Downloads ===="
+		wikitext += "==== Second Stage Downloads ====\n"
 		for secondstage in secondstages:
-			wikitext += "  * %s " % (secondstage)
+			wikitext += "  * %s\n" % (secondstage)
 			
-		wikitext += "==== Registry Keys ===="
+		wikitext += "==== Registry Keys ====\n"
 		for regkey in regkeys:
-			wikitext += "  * %s " % (regkeys)
+			wikitext += "  * %s\n" % (regkeys)
 			
-		wikitext += "===== Behavioral and code analysis findings ====="
-		wikitext += "//%s//" % (behav_summary)
+		wikitext += "===== Behavioral and code analysis findings =====\n"
+		wikitext += "//%s//\n" % (behav_summary)
 		
-		wikitext += "===== Supporting Figures ====="
-		wikitext += "==== Logs ===="
+		wikitext += "===== Supporting Figures =====\n"
+		wikitext += "==== Logs ====\n"
 		for log in logs:
-			wikitext += "  * %s" % (log)
+			wikitext += "  * %s\n" % (log)
 			
-		wikitext += "==== Interesting Strings ===="
+		wikitext += "==== Interesting Strings ====\n"
 		for string in strings:
-			wikitext += "  * %s" % (string)
+			wikitext += "  * %s\n" % (string)
 			
-		wikitext += "==== Other Relevant Files or Data ===="
+		wikitext += "==== Other Relevant Files or Data ====\n"
 		for oth in other:
-			wikitext += "  * %s" % (oth)
+			wikitext += "  * %s\n" % (oth)
 			
-		wikitext += "===== Incident Recommendations ====="
-		wikitext += "==== Network Indicators ===="
+		wikitext += "===== Incident Recommendations =====\n"
+		wikitext += "==== Network Indicators ====\n"
 		for network_indicator in network_indicators:
-			wikitext += "  * %s" % (network_indicator)
+			wikitext += "  * %s\n" % (network_indicator)
 			
-		wikitext += "==== File System Indicators ===="
+		wikitext += "==== File System Indicators ====\n"
 		for fs_indicator in fs_indicators:
-			wikitext += "  * %s" % (fs_indicator)
+			wikitext += "  * %s\n" % (fs_indicator)
 			
-		wikitext += "==== Mitigation Steps ===="
+		wikitext += "==== Mitigation Steps ====\n"
 		for mitigation_step in mitigation_steps:
-			wikitext += "  * %s" % (mitigation_step)
+			wikitext += "  * %s\n" % (mitigation_step)
 			
-		wikitext += "==== Eradication Steps ===="
+		wikitext += "==== Eradication Steps ====\n"
 		for eradication_step in eradication_steps:
-			wikitext += "  * %s" % (eradication_step)
+			wikitext += "  * %s\n" % (eradication_step)
 		
 		return wikitext
 	
@@ -348,31 +348,31 @@ class WikiTemplater(object):
 	
 	def generateThreatActorPage(self, actor_identifier=lipsum_word, date_audited="01/01/2000", given_name=lipsum_word, date_of_birth="01/01/2001", country_of_birth=lipsum_word, location=lipsum_word age="00", names_aliases = [lipsum_word, lipsum_word, lipsum_word], email_addresses = [lipsum_word, lipsum_word, lipsum_word], social_media_sites = ["twitter", "facebook", "linkedin"]):
 		"""Allows programatic generation of a page of a thrat actor. If no factors are given this generates a template page with dummy values."""
-		wikitext = "====== %s ======" % actor_identifier
-		wikitext += "^ Date Audited	 | %s |" % date_audited
-		wikitext += "^ Name			 | %s |" % given_name
-		wikitext += "^ DOB			  | %s |" % date_of_birth
-		wikitext += "^ Country of Birth | %s |" % country_of_birth
-		wikitext += "^ Location		 | %s |" % location
-		wikitext += "^ Age			  | %s |" % age
+		wikitext = "====== %s ======\n" % actor_identifier
+		wikitext += "^ Date Audited	 | %s |\n" % date_audited
+		wikitext += "^ Name			 | %s |\n" % given_name
+		wikitext += "^ DOB			  | %s |\n" % date_of_birth
+		wikitext += "^ Country of Birth | %s |\n" % country_of_birth
+		wikitext += "^ Location		 | %s |\n" % location
+		wikitext += "^ Age			  | %s |\n" % age
 		
-		wikitext += "===== Names/Aliases ====="
+		wikitext += "===== Names/Aliases =====\n"
 		for name_alias in names_aliases:
-			wikitext += "  * %s" % name_alias
+			wikitext += "  * %s\n" % name_alias
 		
-		wikitext += "===== Email Addresses ====="
+		wikitext += "===== Email Addresses =====\n"
 		for email_address in email_addresses:
-			wikitext += "  * %s" % email_address
+			wikitext += "  * %s\n" % email_address
 		
-		wikitext += "===== Social Media Sites ====="
-		"""Ideally would be formatted as tables. First version will be formatted as bullets."""
-		wikitext += "^ IM Names | %s |" % date_audited
-		wikitext += "^ Site/group Affiliation | %s |" % date_audited
-		wikitext += "^ URLs | %s |" % date_audited
-		wikitext += "^ Domain Data | %s |" % date_audited
-		wikitext += "===== Screen Shots ====="
-		wikitext += "===== Tools Used =====" 
-		wikitext += "^ Google Searches and Links | %s |" % date_audited
+		wikitext += "===== Social Media Sites =====\n"
+		# Ideally would be formatted as tables. First version will be formatted as bullets.
+		wikitext += "^ IM Names | %s |\n" % date_audited
+		wikitext += "^ Site/group Affiliation | %s |\n" % date_audited
+		wikitext += "^ URLs | %s |\n" % date_audited
+		wikitext += "^ Domain Data | %s |\n" % date_audited
+		wikitext += "===== Screen Shots =====\n"
+		wikitext += "===== Tools Used =====\n" 
+		wikitext += "^ Google Searches and Links | %s |\n" % date_audited
 		
 		return wikitext
 	
