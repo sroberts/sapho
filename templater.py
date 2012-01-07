@@ -27,11 +27,9 @@ class WikiTemplater(object):
 	doku_password = "sapho_password"
 	
 	# Major Page Types
-	def generateSetPage(pagename):
+	def generateSetPage(self, pagename):
 		wikitext = "====== Summary ======\n"
 		wikitext += "%s" % lipsum
-		wikitext += "==== Hypotheses ====\n"
-		wikitext += "  * [[https://localhost/ach/%s|%s]]" % (hypothesispath, hypothesisname)
 		
 		wikitext += "====== Compromise Vector & Persistence ======\n"
 		wikitext += "==== Compromise Vector ====\n"
@@ -72,16 +70,16 @@ class WikiTemplater(object):
 		wikitext += "|	  |	  |		 |	   |\n"
 		
 		wikitext += "==== Bad User Agent Strings ====\n"
-		wikitext += "^  UserAgent String		^ Notes ^\n"
-		wikitext += "|						  |	   |\n"
+		wikitext += "^ UserAgent String ^ Notes ^\n"
+		wikitext += "|					|		|\n"
 		
 		wikitext += "==== Known Malicious Files ====\n"
 		wikitext += "^ Filename ^ Type ^ Size ^ MD5 ^ SSDeep ^ File ^ Report ^ Notes ^\n"
-		wikitext += "|		  |	  |	  |	 |		|	  |		|	   |\n"
+		wikitext += "|			|	   |	  |	 	|		 |	  	|		 |	   	 |\n"
 		
 		return [intrusion:pagename, wikitext]
 	
-	def generateWikiStartTemplate():
+	def generateWikiStartTemplate(self):
 		wikitext = "====== Summary ======\n"
 		wikitext += "===== Terms and Processes =====\n"
 		wikitext += "  * [[Activity Classification]]\n"
@@ -147,6 +145,8 @@ class WikiTemplater(object):
 		wikitext += "====== Indicators ======\n"
 		for indicator in indicators:
 			wikitext += "  * %s\n" % (indicator)
+		
+		wikitext += "File: FIXME Add files her with upload dialog.\n" 
 		
 		return wikitext	
 	
@@ -289,9 +289,6 @@ class WikiTemplater(object):
 		
 		return wikitext
 	
-	def generateUtilitiesPage(self):
-		"""docstring for generateUtilitiesPage"""
-		pass
 	
 	def generateThreatGroupPage(self, group_name="Alpha", group_summary=lipsum, group_presence=[lipsum_url, lipsum_url], group_type="Unknown", membership=[lipsum_word, lipsum_word], pre_ex_methods=[lipsum_word, lipsum_word], pre_ex_tools=[lipsum_word, lipsum_word], ex_methods=[lipsum_word, lipsum_word], ex_tools=[lipsum_word, lipsum_word], post_ex_methods=[lipsum_word, lipsum_word], post_ex_tools=[lipsum_word, lipsum_word], periods_of_operation=[[lipsum_date, lipsum_date], [lipsum_date, lipsum_date]]):
 		"""Generates Dokuwiki page for profiling a malicious group including key methodologies and tools."""
@@ -378,13 +375,13 @@ class WikiTemplater(object):
 	
 	# Common Elements Generators
 	def generateNewsArticle(self, title=lipsum_short, author=lipsum_word, date="20000101", url="hxxp://www.example.com/article", article_body=lipsum):
-		wikitext = "==== %s ====" % title
-		wikitext += "^ Author | %s |" % author
-		wikitext += "^ Date   | %s |" % date
-		wikitext += "^ URL	| %s |" % url
+		wikitext = "==== %s ====\n" % title
+		wikitext += "^ Author | %s |\n" % author
+		wikitext += "^ Date   | %s |\n" % date
+		wikitext += "^ URL    | %s |\n" % url
 		
-		for line in artcile_body.split("\n"):
-			wikitext += "> %s" % line
+		for line in article_body.split("\n"):
+			wikitext += "> %s\n" % line
 		
 		return wikitext
 	
