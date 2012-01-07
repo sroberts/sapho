@@ -298,9 +298,58 @@ class WikiTemplater(object):
 		"""docstring for generateUtilitiesPage"""
 		pass
 	
-	def generateKnownThreatGroupPage(self):
-		"""docstring for generateKnownThreatGroupPage"""
-		pass
+	def generateThreatGroupPage(self, group_name="Alpha", group_summary=lipsum, group_presence=[lipsum_url, lipsum_url], group_type="Unknown", membership=[lipsum_word, lipsum_word], pre_ex_methods=[lipsum_word, lipsum_word], pre_ex_tools=[lipsum_word, lipsum_word], ex_methods=[lipsum_word, lipsum_word], ex_tools=[lipsum_word, lipsum_word], post_ex_methods=[lipsum_word, lipsum_word], post_ex_tools=[lipsum_word, lipsum_word], periods_of_operation=[[lipsum_date, lipsum_date], [lipsum_date, lipsum_date]]):
+		"""Generates Dokuwiki page for profiling a malicious group including key methodologies and tools."""
+		wikitext = "===== Group: % =====\n" % group_name
+		wikitext += "^ Summary | %s |\n" % group_summary
+		
+		sites = ""
+		for site in group_presence:
+			site += "%s, " % site
+			
+		wikitext += "^ Web Presence | %s |\n" % sites
+		wikitext += "^ Group Type | %s |\n" % group_type
+		
+		wikitext += "===== Membership =====\n"
+		for member in membership:
+			wikitext += "  * [[actor:%s]]\n" % member
+		wikitext += "==== Associated Groups ====\n"
+		for member in membership:
+			wikitext += "  * [[actor:%s]]\n" % member
+			
+		wikitext += "===== Methodology & Tools =====\n"
+		wikitext += "==== Pre-Exploitation Attempt ====\n"
+		wikitext += "=== Methodology ===\n"
+		for pre_ex_method in pre_ex_methods:
+			wikitext += "  * %s\n" % pre_ex_method
+			
+		wikitext += "=== Tool Chain ===\n"
+		for pre_ex_tool in pre_ex_tools:
+			wikitext += "  * %s\n" % pre_ex_tool
+			
+		wikitext += "==== Exploitation Attempt ====\n"
+		wikitext += "=== Methodology ===\n"
+		for ex_method in ex_methods:
+			wikitext += "  * %s\n" % ex_method
+			
+		wikitext += "=== Tool Chain ===\n"
+		for ex_tool in ex_tools:
+			wikitext += "  * %s\n" % ex_tool
+			
+		wikitext += "==== Post Exploitation Attempt ====\n"
+		wikitext += "=== Methodology ===\n"
+		for post_ex_method in post_ex_methods:
+			wikitext += "  * %s\n" % post_ex_method
+			
+		wikitext += "=== Tool Chain ===\n"
+		for post_ex_tool in post_ex_tools:
+			wikitext += "  * %s\n" % post_ex_method
+			
+		wikitext += "===== Periods of Operations =====\n"
+		for period_of_operation in periods_of_operation:
+			wikitext += "  * period_of_operation[0] - period_of_operation[1]\n"
+			
+		return wikitext
 	
 	def generateKnownThreatActorPage(self, actor_identifier=lipsum_word, date_audited="01/01/2000", given_name=lipsum_word, date_of_birth="01/01/2001", country_of_birth=lipsum_word, location=lipsum_word age="00", names_aliases = [lipsum_word, lipsum_word, lipsum_word], email_addresses = [lipsum_word, lipsum_word, lipsum_word], social_media_sites = ["twitter", "facebook", "linkedin"]):
 		"""Allows programatic generation of a page of a thrat actor. If no factors are given this generates a template page with dummy values."""
