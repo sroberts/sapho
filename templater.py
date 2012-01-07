@@ -45,11 +45,11 @@ class WikiTemplater(object):
 		
 		wikitext += "==== IDS Content ====\n"
 		for ids_rule in ids_rules:
-			wikitext += "  * %s" % ids_rule
+			wikitext += "  * %s\n" % ids_rule
 		
 		wikitext += "==== Open Tickets ====\n"
 		for ticket in tickets:
-			wikitext += "  * %s" % ticket
+			wikitext += "  * %s\n" % ticket
 		
 		wikitext += "===== Indicators =====\n"
 		wikitext += "==== Known Compromised Hosts ====\n"
