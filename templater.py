@@ -27,47 +27,50 @@ class WikiTemplater(object):
 	doku_password = "sapho_password"
 	
 	# Major Page Types
-	def generateSetPage(self, pagename):
+	def generateSetPage(self, summary=lipsum, compromise=lipsum, persistence=lipsum, siem_content=[lipsum_short, lipsum_short], ids_rules=[lipsum_short, lipsum_short], tickets=[lipsum_short, lipsum_short]):
 		wikitext = "====== Summary ======\n"
-		wikitext += "%s" % lipsum
+		wikitext += "%s\n" % summary
 		
 		wikitext += "====== Compromise Vector & Persistence ======\n"
 		wikitext += "==== Compromise Vector ====\n"
-		wikitext += "%s" % lipsum
+		wikitext += "%s\n" % compromise
 		
 		wikitext += "===== Persistence =====\n"
-		wikitext += "%s" % lipsum
+		wikitext += "%s\n" % persistence
 		
 		wikitext += "====== Detection =====\n"
-		wikitext += "==== ArcSight Content ====\n"
-		wikitext += "  * %s" % lipsum_short
+		wikitext += "==== SIEM Content ====\n"
+		for siem_rule in siem_content:
+			wikitext += "  * %s\n" % siem_rule
 		
-		wikitext += "==== Netwitness Content ====\n"
-		wikitext += "  * %s" % lipsum_short
+		wikitext += "==== IDS Content ====\n"
+		for ids_rule in ids_rules:
+			wikitext += "  * %s" % ids_rule
 		
 		wikitext += "==== Open Tickets ====\n"
-		wikitext += "  * %s" % lipsum_short
+		for ticket in tickets:
+			wikitext += "  * %s" % ticket
 		
 		wikitext += "===== Indicators =====\n"
 		wikitext += "==== Known Compromised Hosts ====\n"
 		wikitext += "^ IP Address ^ Host Name ^ User Name ^ Title ^ Department ^ Notes ^\n"
-		wikitext += "|			|		   |		   |	   |			|	   |\n"
+		wikitext += "|			  |			  |			  |		  |			   |	   |\n"
 		
 		wikitext += "==== Known Compromised Accounts ====\n"
 		wikitext += "^ Username ^ User ^ Notes ^\n"
-		wikitext += "|		  |	  |	   |\n"
+		wikitext += "|		 	|	   |	   |\n"
 		
 		wikitext += "==== IP Indicators ====\n"
 		wikitext += "^ IP Address ^ Location ^ URL ^ Research ^ Notes ^\n"
-		wikitext += "|			|		  |	 |		  |	   |\n"
+		wikitext += "|			  |			 |	   |		  |	   	  |\n"
 		
 		wikitext += "==== URL Indicators ====\n"
 		wikitext += "^ URL ^ Associated IP Addresses ^ Location ^ Research ^ Notes ^\n"
-		wikitext += "|	 |						 |		  |		  |	   |\n"
+		wikitext += "|	   |						 |			|		   |	   |\n"
 		
 		wikitext += "==== Known Attacker Ports ====\n"
 		wikitext += "^ Port ^ Type ^ Service ^ Notes ^\n"
-		wikitext += "|	  |	  |		 |	   |\n"
+		wikitext += "|		|	   |		 |		 |\n"
 		
 		wikitext += "==== Bad User Agent Strings ====\n"
 		wikitext += "^ UserAgent String ^ Notes ^\n"
@@ -77,7 +80,7 @@ class WikiTemplater(object):
 		wikitext += "^ Filename ^ Type ^ Size ^ MD5 ^ SSDeep ^ File ^ Report ^ Notes ^\n"
 		wikitext += "|			|	   |	  |	 	|		 |	  	|		 |	   	 |\n"
 		
-		return [intrusion:pagename, wikitext]
+		return wikitext
 	
 	def generateWikiStartTemplate(self):
 		wikitext = "====== Summary ======\n"
