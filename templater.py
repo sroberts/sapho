@@ -14,12 +14,14 @@ import datetime
 help_message = '''
 Sapho Templater is for automatically generating, populating, and posting Sapho wiki pages to a Dokuwiki implimentation. This takes a lot of the pain out of generating a new page.
 '''
-# Filler text pulled from http://www.lipsum.com except date & url
+# Filler text pulled from http://www.lipsum.com except date, url, email
 lipsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 lipsum_short = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 lipsum_word = "Lorem ipsum"
 lipsum_date = "19990101" #sample date in YYYYMMDD format
+lipsum_datetime = "19990101 12:00:00" #sample date in YYYYMMDD format
 lipsum_url = "http://www.example.com"
+lipsum_email = "sample@example.com"
 	
 # Wiki Classes
 class WikiTemplater(object):
@@ -27,13 +29,41 @@ class WikiTemplater(object):
 	doku_password = "sapho_password"
 	
 	# Major Page Types
-	def generateSetPage(self, summary=lipsum, compromise=lipsum, persistence=lipsum, siem_content=[lipsum_short, lipsum_short], ids_rules=[lipsum_short, lipsum_short], tickets=[lipsum_short, lipsum_short]):
+	def generateSetPage(self, summary=lipsum, compromise=lipsum, from_addresses=[[lipsum_word, lipsum_email], [lipsum_word, lipsum_email]], to_addresses=[[lipsum_word, lipsum_email], [lipsum_word, lipsum_email]], cc_addresses=[[lipsum_word, lipsum_email], [lipsum_word, lipsum_email]], datetime=lipsum_datetime, subject=lipsum_short, body=lipsum, attachments=[lipsum_word, lipsum_word], persistence=lipsum, siem_content=[lipsum_short, lipsum_short], ids_rules=[lipsum_short, lipsum_short], tickets=[lipsum_short, lipsum_short]):
 		wikitext = "====== Summary ======\n"
 		wikitext += "%s\n" % summary
 		
 		wikitext += "====== Compromise Vector & Persistence ======\n"
 		wikitext += "==== Compromise Vector ====\n"
 		wikitext += "%s\n" % compromise
+		
+		wikitext += "==== Phishing/Spearfishing/Spam Email ====\n"
+
+		from = ""
+		for from_address in from_addreses:
+			from += "%s, " % from_address
+		wikitext += "^ From			| %s |\n" % from
+
+		to = ""
+		for to_address in to_addreses:
+			to += "%s, " % to_address
+		wikitext += "^ To			| %s |\n" % to
+
+		cc = ""
+		for cc_address in cc_addreses:
+			cc += "%s, " % cc_address
+		wikitext += "^ CC			| %s |\n" % cc
+
+		wikitext += "^ Date & Time	| %s |\n" % datetime
+
+		wikitext += "^ Subject		| %s |\n" % subject
+		wikitext += "^ Body			| <code>%s</code>\n| " % body
+
+		attached = ""
+		for attachment in attachments:
+			attached += "%s, " % attachments
+		wikitext += "^ Attachments 	| FIXME Add using files dialog %s |\n" % attached
+		wikitext += "^ MIME			| FIXME Add using file dialog |\n"
 		
 		wikitext += "===== Persistence =====\n"
 		wikitext += "%s\n" % persistence
@@ -54,19 +84,19 @@ class WikiTemplater(object):
 		wikitext += "===== Indicators =====\n"
 		wikitext += "==== Known Compromised Hosts ====\n"
 		wikitext += "^ IP Address ^ Host Name ^ User Name ^ Title ^ Department ^ Notes ^\n"
-		wikitext += "|			  |			  |			  |		  |			   |	   |\n"
+		wikitext += "|			  |			   |           |       |            |       |\n"
 		
 		wikitext += "==== Known Compromised Accounts ====\n"
 		wikitext += "^ Username ^ User ^ Notes ^\n"
-		wikitext += "|		 	|	   |	   |\n"
+		wikitext += "|		 	|	   |	    |\n"
 		
 		wikitext += "==== IP Indicators ====\n"
 		wikitext += "^ IP Address ^ Location ^ URL ^ Research ^ Notes ^\n"
-		wikitext += "|			  |			 |	   |		  |	   	  |\n"
+		wikitext += "|			  |			  |     |          |       |\n"
 		
 		wikitext += "==== URL Indicators ====\n"
 		wikitext += "^ URL ^ Associated IP Addresses ^ Location ^ Research ^ Notes ^\n"
-		wikitext += "|	   |						 |			|		   |	   |\n"
+		wikitext += "|	  |			||	  ||\n"
 		
 		wikitext += "==== Known Attacker Ports ====\n"
 		wikitext += "^ Port ^ Type ^ Service ^ Notes ^\n"
@@ -74,7 +104,7 @@ class WikiTemplater(object):
 		
 		wikitext += "==== Bad User Agent Strings ====\n"
 		wikitext += "^ UserAgent String ^ Notes ^\n"
-		wikitext += "|					|		|\n"
+		wikitext += "|					|  		|\n"
 		
 		wikitext += "==== Known Malicious Files ====\n"
 		wikitext += "^ Filename ^ Type ^ Size ^ MD5 ^ SSDeep ^ File ^ Report ^ Notes ^\n"
@@ -84,6 +114,7 @@ class WikiTemplater(object):
 	
 	def generateWikiStartTemplate(self):
 		wikitext = "====== Summary ======\n"
+		wikitext = "{{http://infosuck.org/0x003f.png}} FIXME, at least remove the hotlink.\n"
 		wikitext += "===== Terms and Processes =====\n"
 		wikitext += "  * [[Activity Classification]]\n"
 		wikitext += "  * [[Wiki Conventions]]\n"
@@ -96,13 +127,14 @@ class WikiTemplater(object):
 		
 		wikitext += "====== Intrusion Campaigns ======\n"
 		wikitext += "===== Alpha Campaign =====\n"
-		wikitext += "  * [[intrusion:Alpha Alpha]] - **Date Identified:** -\n"
-		wikitext += "  * [[intrusion:Alpha Bravo]] - **Date Identified:** -\n"
+		wikitext += "  * [[intrusionset:Alpha Alpha]] - **Date Identified:** -\n"
+		wikitext += "  * [[intrusionset:Alpha Bravo]] - **Date Identified:** -\n"
 		wikitext += "**C2:** - **Exfil:** -"
 		wikitext += "===== Bravo Campaign =====\n"
-		wikitext += "  * [[intrusion:Bravo Alpha]] - **Date Identified:** -\n"
-		wikitext += "  * [[intrusion:Bravo Bravo]] - **Date Identified:** -\n"
+		wikitext += "  * [[intrusionset:Bravo Alpha]] - **Date Identified:** -\n"
+		wikitext += "  * [[intrusionset:Bravo Bravo]] - **Date Identified:** -\n"
 		wikitext += "**C2:** - **Exfil:** -\n"
+		wikitext += "[[intrusionset:Archived Campaigns]]"
 		
 		wikitext += "====== Third Party Intelligence ======\n"
 		wikitext += "  * [[thirdpartyintel:TPI-Alpha]] - **Date Received:** -\n"
@@ -111,27 +143,30 @@ class WikiTemplater(object):
 		
 		wikitext += "====== Known Malicious Tools ======\n"
 		wikitext += "===== Exploits =====\n"
-		wikitext += "  * [[malcode:Alpha.exploit]] - Exploitation tool Alpha.\n"
+		wikitext += "  * [[malcode_exploits:Alpha.exploit]] - Exploitation tool Alpha.\n"
+		wikitext += "  * [[malcode_exploits:Bravo.exploit]] - Exploitation tool Bravo.\n"
 		wikitext += "===== Implants =====\n"
 		wikitext += "  * Alpha\n"
-		wikitext += "	* AA: [[malcode:Alpha.implant]]\n"
+		wikitext += "	* AA: [[malcode_implants:Alpha.implant]]\n"
 		wikitext += "  * Bravo\n"
-		wikitext += "	* BA: [[malcode:Bravo.implant]]\n"
+		wikitext += "	* BA: [[malcode_implants:Bravo.implant]]\n"
 		wikitext += "===== Utilities =====\n"
-		wikitext += "  * [[malcode:Alpha.util]] - Alpha.util summary.\n"
+		wikitext += "  * [[malcode_utilities:Alpha.util]] - Alpha.util summary.\n"
+		wikitext += "  * [[malcode_utilities:Bravo.util]] - Bravo.util summary.\n"
 		
 		wikitext += "====== Known Threat Actors ======\n"
 		wikitext += "===== Known Threat Groups =====\n"
-		wikitext += "  * [[actor:Actor Alpha]]\n"
-		wikitext += "  * [[actor:Actor Bravo]]\n"
+		wikitext += "  * [[actor:Actor Yankee]] - Prefix: Alpha\n"
+		wikitext += "  * [[actor:Actor Zulu]] - Prefix: Bravo\n"
 		wikitext += "===== Known Threat Actors =====\n"
-		wikitext += "  * [[actor:Person Alpha]]\n"
-		wikitext += "  * [[actor:Person Bravo]]\n"
+		wikitext += "  * [[actor:Person Yankee]]  - Prefix: Alpha\n"
+		wikitext += "  * [[actor:Person Zulu]]  - Prefix: Alpha\n"
 		
 		wikitext += "====== Templates ======\n"
 		wikitext += "  * [[template:Set Page Template]]\n"
 		wikitext += "  * [[template:Compromise Page Template]]\n"
 		wikitext += "  * [[template:Attacker Tool Page Template]]\n"
+		wikitext += "  * [[templateMalware Analysis Report Template]]\n"
 		
 		return wikitext
 	
