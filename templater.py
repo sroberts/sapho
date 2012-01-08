@@ -10,6 +10,7 @@ Copyright (c) 2011 TogaFoamParty Studios. All rights reserved.
 import sys
 import getopt
 import datetime
+from dokuwikixmlrpc import DokuWikiClient
 
 help_message = '''
 Sapho Templater is for automatically generating, populating, and posting Sapho wiki pages to a Dokuwiki implimentation. This takes a lot of the pain out of generating a new page.
@@ -19,14 +20,29 @@ lipsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm
 lipsum_short = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 lipsum_word = "Lorem ipsum"
 lipsum_date = "19990101" #sample date in YYYYMMDD format
-lipsum_datetime = "19990101 12:00:00" #sample date in YYYYMMDD format
+lipsum_datetime = "19990101 12:00:00" #sample date in YYYYMMDD HH:MM:SS format
 lipsum_url = "http://www.example.com"
 lipsum_email = "sample@example.com"
 	
 # Wiki Classes
-class WikiTemplater(object):
-	doku_username = "sapho"
-	doku_password = "sapho_password"
+class SaphoTemplater(object):
+	dokuwiki_url = ""
+	doku_username = ""
+	doku_password = ""
+	
+	
+	def __init__(self):
+		"""docstring for __init__"""
+		print "You will not be able to post directly to a Dokuwiki without arguments."
+		return self
+	
+	def __init__(self, url, username, password):
+		"""__init__ with arguements allows automated posting to a Dokuwiki."""
+		self.dokuwiki_url = url
+		self.dokuwiki_username = username
+		self.dokuwiki_password = password
+		
+		return self
 	
 	# Major Page Types
 	def generateSetPage(self, summary=lipsum, compromise=lipsum, from_addresses=[[lipsum_word, lipsum_email], [lipsum_word, lipsum_email]], to_addresses=[[lipsum_word, lipsum_email], [lipsum_word, lipsum_email]], cc_addresses=[[lipsum_word, lipsum_email], [lipsum_word, lipsum_email]], datetime=lipsum_datetime, subject=lipsum_short, body=lipsum, attachments=[lipsum_word, lipsum_word], persistence=lipsum, siem_content=[lipsum_short, lipsum_short], ids_rules=[lipsum_short, lipsum_short], tickets=[lipsum_short, lipsum_short]):
