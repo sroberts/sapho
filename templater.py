@@ -65,6 +65,7 @@ class WikiTemplater(object):
 		wikitext += "^ Attachments 	| FIXME Add using files dialog %s |\n" % attached
 		wikitext += "^ MIME			| FIXME Add using file dialog |\n"
 		
+		
 		wikitext += "===== Persistence =====\n"
 		wikitext += "%s\n" % persistence
 		
@@ -77,19 +78,24 @@ class WikiTemplater(object):
 		for ids_rule in ids_rules:
 			wikitext += "  * %s\n" % ids_rule
 		
+		wikitext += "==== Firewall Content ====\n"
+		for fw_rule in fw_rules:
+			wikitext += "  * %s\n" % ids_rule
+		
 		wikitext += "==== Open Tickets ====\n"
 		for ticket in tickets:
 			wikitext += "  * %s\n" % ticket
 		
-		wikitext += "===== Indicators =====\n"
+		wikitext += "===== Compromised Resources =====\n"	
 		wikitext += "==== Known Compromised Hosts ====\n"
 		wikitext += "^ IP Address ^ Host Name ^ User Name ^ Title ^ Department ^ Notes ^\n"
 		wikitext += "|			  |			   |           |       |            |       |\n"
-		
+
 		wikitext += "==== Known Compromised Accounts ====\n"
 		wikitext += "^ Username ^ User ^ Notes ^\n"
 		wikitext += "|		 	|	   |	    |\n"
 		
+		wikitext += "===== Indicators =====\n"		
 		wikitext += "==== IP Indicators ====\n"
 		wikitext += "^ IP Address ^ Location ^ URL ^ Research ^ Notes ^\n"
 		wikitext += "|			  |			  |     |          |       |\n"
@@ -101,6 +107,24 @@ class WikiTemplater(object):
 		wikitext += "==== Known Attacker Ports ====\n"
 		wikitext += "^ Port ^ Type ^ Service ^ Notes ^\n"
 		wikitext += "|		|	   |		 |		 |\n"
+		
+		wikitext += "===== Bad SSL Certificate ====="
+		wikitext += "^ Version								|		|" 
+		wikitext += "^ Serial Number						|		|" 
+		wikitext += "^ Algorithm ID							|		|" 
+		wikitext += "^ Issuer								|		|" 
+		wikitext += "^ Validity								|		|" 
+		wikitext += "^ Not Before							|		|" 
+		wikitext += "^ Not After							|		|" 
+		wikitext += "^ Subject								|		|" 
+		wikitext += "^ Subject Public Key Info				|		|" 
+		wikitext += "^ Public Key Algorithm					|		|" 
+		wikitext += "^ Subject Public Key					|		|" 
+		wikitext += "^ Issuer Unique Identifier (optional)	|		|" 
+		wikitext += "^ Subject Unique Identifier (optional)	|		|" 
+		wikitext += "^ Extensions (optional)				|		|" 
+		wikitext += "^ Certificate Signature Algorithm		|		|" 
+		wikitext += "^ Certificate Signature				|		|"
 		
 		wikitext += "==== Bad User Agent Strings ====\n"
 		wikitext += "^ UserAgent String ^ Notes ^\n"
