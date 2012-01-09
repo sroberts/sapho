@@ -41,7 +41,7 @@ class SaphoTemplater(object):
 		self.dokuwiki_url = url
 		self.dokuwiki_username = username
 		self.dokuwiki_password = password
-		self.wiki = dokuwikixmlrpc.DokuWikiClient(self.dokuwiki_url, self.dokuwiki_username, self.dokuwiki_password = password)
+		self.wiki = dokuwikixmlrpc.DokuWikiClient(self.dokuwiki_url, self.dokuwiki_username, self.dokuwiki_password)
 		
 		return self
 	
@@ -55,27 +55,27 @@ class SaphoTemplater(object):
 		wikitext += "%s\n" % compromise
 		
 		wikitext += "==== Phishing/Spearfishing/Spam Email ====\n"
-
-		from = ""
+		
+		from_add = ""
 		for from_address in from_addreses:
-			from += "%s, " % from_address
-		wikitext += "^ From			| %s |\n" % from
-
+			from_add += "%s, " % from_address
+		wikitext += "^ From			| %s |\n" % from_add
+		
 		to = ""
 		for to_address in to_addreses:
 			to += "%s, " % to_address
 		wikitext += "^ To			| %s |\n" % to
-
+		
 		cc = ""
 		for cc_address in cc_addreses:
 			cc += "%s, " % cc_address
 		wikitext += "^ CC			| %s |\n" % cc
-
+		
 		wikitext += "^ Date & Time	| %s |\n" % datetime
-
+		
 		wikitext += "^ Subject		| %s |\n" % subject
 		wikitext += "^ Body			| <code>%s</code>\n| " % body
-
+		
 		attached = ""
 		for attachment in attachments:
 			attached += "%s, " % attachments
@@ -229,7 +229,7 @@ class SaphoTemplater(object):
 		
 		return wikitext	
 	
-	def generateExploitPage(self, exploit_name=lipsum_word, date_exploit_identified=lipsum_date, date_exploit_public=lipsum_date, date_exploit_updated=lipsum_date, author=lipsum_word, actor=[[Alpha]], vuln_app=lipsum_word, vuln_mod=lipsum_word, vuln_ver="1.0", vuln_patch="N/A", mitigation=lipsum, edb=0000, cve="CVE-0000-0000", osvdb=0000, exploit_sources[lipsum_url,lipsum_url], notes=lipsum):
+	def generateExploitPage(self, exploit_name=lipsum_word, date_exploit_identified=lipsum_date, date_exploit_public=lipsum_date, date_exploit_updated=lipsum_date, author=lipsum_word, actor="[[Alpha]]", vuln_app=lipsum_word, vuln_mod=lipsum_word, vuln_ver="1.0", vuln_patch="N/A", mitigation=lipsum, edb=0000, cve="CVE-0000-0000", osvdb=0000, exploit_sources=[lipsum_url,lipsum_url], notes=lipsum):
 		wikitext = "Name: %s" % exploit_name
 		
 		wikitext += "===== Timeline =====\n"
@@ -261,7 +261,7 @@ class SaphoTemplater(object):
 		wikitext += "OSVDB-ID: %s\n" % str(osvdb)
 		
 		wikitext += "=== Exploit Sources ===\n"
-		for exploit_source in exploit sources:
+		for exploit_source in exploit_sources:
 			wikitext += "  * <nowiki>%s</nowiki>\n" % exploit_source 
 			
 		wikitext += "===== Notes =====\n"
@@ -422,7 +422,7 @@ class SaphoTemplater(object):
 			
 		return wikitext
 	
-	def generateThreatActorPage(self, actor_identifier=lipsum_word, date_audited="01/01/2000", given_name=lipsum_word, date_of_birth="01/01/2001", country_of_birth=lipsum_word, location=lipsum_word age="00", names_aliases = [lipsum_word, lipsum_word, lipsum_word], email_addresses = [lipsum_word, lipsum_word, lipsum_word], social_media_sites = ["twitter", "facebook", "linkedin"]):
+	def generateThreatActorPage(self, actor_identifier=lipsum_word, date_audited=lipsum_date, given_name=lipsum_word, date_of_birth=lipsum_date, country_of_birth=lipsum_word, location=lipsum_word, age="00", names_aliases = [lipsum_word, lipsum_word, lipsum_word], email_addresses = [lipsum_word, lipsum_word, lipsum_word], social_media_sites = ["twitter", "facebook", "linkedin"]):
 		"""Allows programatic generation of a page of a thrat actor. If no factors are given this generates a template page with dummy values."""
 		wikitext = "====== %s ======\n" % actor_identifier
 		wikitext += "^ Date Audited	 | %s |\n" % date_audited
@@ -470,9 +470,10 @@ class SaphoTemplater(object):
 		
 		try:
 			self.wiki.put_page(pagename, wikitext, "Posting initial layout of %s.", False) % pagename
-		except Exception as inst:
-			print "Exception: %s. Exiting." % inst
-			break
+		except:
+			return False
+		finally:
+			return True
 	
 
 # Client Code
