@@ -41,6 +41,7 @@ class SaphoTemplater(object):
 		self.dokuwiki_url = url
 		self.dokuwiki_username = username
 		self.dokuwiki_password = password
+		self.wiki = dokuwikixmlrpc.DokuWikiClient(self.dokuwiki_url, self.dokuwiki_username, self.dokuwiki_password = password)
 		
 		return self
 	
@@ -465,8 +466,14 @@ class SaphoTemplater(object):
 	
 	# Wiki Methods
 	def postAsPage(self, pagename, wikitext):
-		"""docstring for postAsPage"""
-		pass
+		"""Post wikitext to preset dokuwiki as page pagename."""
+		
+		try:
+			self.wiki.put_page(pagename, wikitext, "Posting initial layout of %s.", False) % pagename
+		except Exception as inst:
+			print "Exception: %s. Exiting." % inst
+			break
+	
 
 # Client Code
 def main(argv=None):
