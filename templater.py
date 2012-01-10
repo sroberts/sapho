@@ -28,7 +28,6 @@ lipsum_email = "sample@example.com"
 class SaphoTemplater(object):
 	
 	"""def __init__(self, url=None, username=None, password=None):
-		"""__init__ with arguements allows automated posting to a Dokuwiki."""
 		
 		if url == True:
 			self.wiki = DokuWikiClient(url, username, password)"""
@@ -449,28 +448,27 @@ class SaphoTemplater(object):
 		return wikitext
 	
 	# Common Elements Generators
-	def generateNewsArticle(self, title=lipsum_short, author=lipsum_word, date="20000101", url="hxxp://www.example.com/article", article_body=lipsum):
+	def generateNewsArticlePage(self, title=lipsum_word, author=lipsum_word, date="20000101", url=lipsum_url, article_body=lipsum):
 		wikitext = "==== %s ====\n" % title
 		wikitext += "^ Author | %s |\n" % author
 		wikitext += "^ Date   | %s |\n" % date
-		wikitext += "^ URL    | %s |\n" % url
+		wikitext += "^ URL    | %s |\n\n" % url
 		
 		for line in article_body.split("\n"):
 			wikitext += "> %s\n" % line
-		
+			
 		return wikitext
 	
 	# Wiki Methods
-	def postAsPage(self, pagename, wikitext):
+	def postAsPage(self, url, username, password, pagename, wikitext):
 		"""Post wikitext to preset dokuwiki as page pagename."""
 		
 		print "Posting %s" % pagename
 		try:
-			self.wiki.put_page(pagename, wikitext, "Posting initial layout of %s.", False) % pagename
-		except:
-			return False
-		finally:
-			return True
+			wiki = dokuwikixmlrpc.DokuWikiClient(url, username, password)
+			print wiki.put_page(page, wikitext)
+		except Exception as e:
+			print 
 	
 
 class Usage(Exception):
@@ -485,7 +483,7 @@ def main(argv=None):
 		argv = sys.argv
 	try:
 		try:
-			opts, args = getopt.getopt(argv[1:], "hw:u:p:v", ["help", "wiki=", "user=", "pass="])
+			opts, args = getopt.getopt(argv[1:], "hiw:u:p:v", ["help", "wiki=", "user=", "pass="])
 		except getopt.error, msg:
 			raise Usage(msg)
 		
@@ -497,6 +495,12 @@ def main(argv=None):
 		for option, value in opts:
 			if option == "-v":
 				verbose = True
+			if option == "-i":
+				interactive = True
+			if option == "-f":
+				to_file = True
+			if option == "-s":
+				to_screen = True
 			if option in ("-h", "--help"):
 				raise Usage(help_message)
 			if option in ("-w", "--wiki"):
@@ -505,14 +509,14 @@ def main(argv=None):
 				user = value
 			if option in ("-p", "--pass"):
 				password = value
+			if (wiki == False or username == False or password == False) and to_file == False:
+				to_screen = True
 	except Usage, err:
 		print >> sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg)
 		print >> sys.stderr, "\t for help use --help"
 		return 2
 	
-	print "Connecting to %s as %s with password %s..." % (wiki, user, password)
-	st = SaphoTemplater(wiki, user, password)
-	st.postAsPage("TEST","TEST")
+	
 
 
 if __name__ == "__main__":
