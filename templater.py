@@ -12,9 +12,6 @@ import getopt
 import datetime
 from dokuwikixmlrpc import *
 
-help_message = '''
-Sapho Templater is for automatically generating, populating, and posting Sapho wiki pages to a Dokuwiki implimentation. This takes a lot of the pain out of generating a new page.
-'''
 # Filler text pulled from http://www.lipsum.com except date, url, email
 lipsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 lipsum_short = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
@@ -508,7 +505,7 @@ class SaphoTemplater(object):
 		try:
 			wiki = DokuWikiClient(url, username, password)
 			wiki.put_page(pagename, wikitext)
-			print "Page %s posted" % pagename
+			print "Page [[%s]] posted" % pagename
 		except Exception as e:
 			print "Error: %s" % e
 			
@@ -520,26 +517,44 @@ class Usage(Exception):
 	
 
 # Client Code
+help_message = '''
+Sapho Templater is for automatically generating, populating, and posting Sapho wiki pages to a Dokuwiki implimentation. This takes a lot of the pain out of generating a new page.
+
+Program Options:
+\t-w, --wiki	wiki url: on localhost http://127.0.0.1/~mentat/dokuwiki
+\t-u, --user	username: a user allowed to use xml-rpc interface
+\t-p, --pass	password: password for the sapho user
+\t-f			to file: will print template(s) to a file in the present working directory
+\t-s			to screen: will print template(s) to the screen
+
+Sapho:
+\t--setup		Installs complete sapho wiki including sample pages and templates (requires wiki, username, password)
+\t--template		Posts a single page based on a template. Specify title as an argument, then select a template (--page "Alpha Alpha")
+'''
+
 def main(argv=None):
 	
 	if argv is None:
 		argv = sys.argv
 	try:
 		try:
-			opts, args = getopt.getopt(argv[1:], "hiw:u:p:v", ["help", "wiki=", "user=", "pass="])
+			opts, args = getopt.getopt(argv[1:], "hiw:u:p:v", ["help", "wiki=", "user=", "pass=", "setup", "template=", "title=", "print="])
 		except getopt.error, msg:
 			raise Usage(msg)
 		
 		# option processing
-		wiki = None
-		user = None 
+		wiki_url = None
+		username = None 
 		password = None
+		setup_to_wiki = False
+		page_title = ""
+		wiki = SaphoTemplater()
 		
 		for option, value in opts:
 			if option == "-v":
 				verbose = True
-			if option == "-i":
-				interactive = True
+			#if option == "-i":
+				#interactive = True
 			if option == "-f":
 				to_file = True
 			if option == "-s":
@@ -552,17 +567,47 @@ def main(argv=None):
 				username = value
 			if option in ("-p", "--pass"):
 				password = value
+			if option in ("--setup"):
+				setup_to_wiki = True
+			if option in ("--template"):
+				page_title = value
 			
 		if (wiki_url == False or username == False or password == False) and to_file == False:
 			to_screen = True
+		elif setup_to_wiki == True:
+			wiki.initialSetup(wiki_url, username, password)
+		elif page_title:
+			print "Select a template for page %s:" % value
+			print "\t1) template:Intrusion Set Page"
+			print "\t2) template:Third Party Intelligence Page"
+			print "\t3) template:Exploit Page"
+			print "\t4) template:Implant Page"
+			print "\t5) template:Malicious Group Page"
+			print "\t6) template:Malicious Actor Page"
+			
+			page_to_wiki = input("Template: ")
+			
+			if page_to_wiki == 1:
+				wiki.postAsPage(wiki_url, username, password, "intrusionset:%s" % page_title, wiki.generateSetPage())
+			elif page_to_wiki == 2:
+				wiki.postAsPage(wiki_url, username, password, "thirdpartyintel:%s" % page_title, wiki.generateThirdPartyIntelligencePage())
+			elif page_to_wiki == 3:
+				wiki.postAsPage(wiki_url, username, password, "malcode_exploits:%s" % page_title, wiki.generateExploitPage())
+			elif page_to_wiki == 4:
+				wiki.postAsPage(wiki_url, username, password, "malcode_implants:%s" % page_title, wiki.generateImplantPage())
+			elif page_to_wiki == 5:
+				wiki.postAsPage(wiki_url, username, password, "actor:%s" % page_title, wiki.generateThreatGroupPage())
+			elif page_to_wiki == 6:
+				wiki.postAsPage(wiki_url, username, password, "actor:%s" % page_title, wiki.generateThreatActorPage())
+			else:
+				raise Usage("Invalid template selected")
+				
+			
 	except Usage, err:
 		print >> sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg)
 		print >> sys.stderr, "\t for help use --help"
 		return 2
 	
-	wiki = SaphoTemplater()
-	wiki.initialSetup(wiki_url, username, password)
-
 
 if __name__ == "__main__":
 	sys.exit(main())
