@@ -144,17 +144,18 @@ class SaphoTemplater(object):
 	
 	def generateWikiStartTemplate(self):
 		wikitext = "====== Summary ======\n"
-		wikitext += "{{http://infosuck.org/0x003f.png}} \nFIXME at least remove the hotlink.\n"
+		wikitext += "{{http://infosuck.org/0x003f.png?600}} \n\nFIXME at least remove the hotlink.\n"
+		
 		wikitext += "===== Terms and Processes =====\n"
 		wikitext += "  * [[Activity Classification]]\n"
 		wikitext += "  * [[Wiki Conventions]]\n"
-
+		
 		wikitext += "====== News ======\n"
 		wikitext += "===== SANS ISC =====\n"
 		wikitext += "{{rss>http://isc.sans.edu/rssfeed_full.xml 5 author date 1h }}\n"
 		wikitext += "===== Team Cymru =====\n"
 		wikitext += "{{rss>http://www.team-cymru.org/News/secnews.rss 5 author date 1h }}\n"
-
+		
 		wikitext += "====== Intrusion Campaigns ======\n"
 		wikitext += "===== Alpha Campaign =====\n"
 		wikitext += "  * [[intrusionset:Alpha Alpha]] - **Date Identified:** -\n"
@@ -164,13 +165,13 @@ class SaphoTemplater(object):
 		wikitext += "  * [[intrusionset:Bravo Alpha]] - **Date Identified:** -\n"
 		wikitext += "  * [[intrusionset:Bravo Bravo]] - **Date Identified:** -\n"
 		wikitext += "**C2:** - **Exfil:** -\n"
-		wikitext += "[[intrusionset:Archived Campaigns]]"
-
+		wikitext += "\n[[intrusionset:Archived Intrusion Sets]]\n"
+		
 		wikitext += "====== Third Party Intelligence ======\n"
 		wikitext += "  * [[thirdpartyintel:TPI-Alpha]] - **Date Received:** -\n"
 		wikitext += "  * [[thirdpartyintel:TPI-Bravo]] - **Date Received:** -\n"
-		wikitext += "  * [[thirdpartyintel:Archive]] - **Date Received:** -\n"
-
+		wikitext += "  * [[thirdpartyintel:Archived Third Party Intelligence]]\n"
+		
 		wikitext += "====== Known Malicious Tools ======\n"
 		wikitext += "===== Exploits =====\n"
 		wikitext += "  * [[malcode_exploits:Alpha.exploit]] - Exploitation tool Alpha.\n"
@@ -183,21 +184,23 @@ class SaphoTemplater(object):
 		wikitext += "===== Utilities =====\n"
 		wikitext += "  * [[malcode_utilities:Alpha.util]] - Alpha.util summary.\n"
 		wikitext += "  * [[malcode_utilities:Bravo.util]] - Bravo.util summary.\n"
-
+		
 		wikitext += "====== Known Threat Actors ======\n"
 		wikitext += "===== Known Threat Groups =====\n"
-		wikitext += "  * [[actor:Actor Yankee]] - Prefix: Alpha\n"
-		wikitext += "  * [[actor:Actor Zulu]] - Prefix: Bravo\n"
+		wikitext += "  * [[actor:Group Alpha]] - Prefix: Alpha\n"
+		wikitext += "  * [[actor:Group Bravo]] - Prefix: Bravo\n"
 		wikitext += "===== Known Threat Actors =====\n"
-		wikitext += "  * [[actor:Person Yankee]]  - Prefix: Alpha\n"
-		wikitext += "  * [[actor:Person Zulu]]  - Prefix: Alpha\n"
-
+		wikitext += "  * [[actor:Person Alpha]]  - Prefix: Alpha\n"
+		wikitext += "  * [[actor:Person Bravo]]  - Prefix: Alpha\n"
+		
 		wikitext += "====== Templates ======\n"
-		wikitext += "  * [[template:Set Page Template]]\n"
-		wikitext += "  * [[template:Compromise Page Template]]\n"
-		wikitext += "  * [[template:Attacker Tool Page Template]]\n"
-		wikitext += "  * [[templateMalware Analysis Report Template]]\n"
-
+		wikitext += "  * [[template:Intrusion Set Page]]\n"
+		wikitext += "  * [[template:Third Party Intelligence Page]]\n"
+		wikitext += "  * [[template:Exploit Page]]\n"
+		wikitext += "  * [[template:Implant Page]]\n"
+		wikitext += "  * [[template:Malicious Group Page]]\n"
+		wikitext += "  * [[template:Malicious Actor Page]]\n"
+		
 		return wikitext
 	
 	def generateThirdPartyIntelligencePage(self, filename="example.file", tipDate=datetime.date.today(), analystName=lipsum_word, data=lipsum, indicators = [lipsum_word, lipsum_word]):
@@ -256,7 +259,7 @@ class SaphoTemplater(object):
 		
 		return wikitext
 	
-	def generateImplantsPage(self, intrusionSet="Alpha Alpha", filename="Example.file", filetype="example", fileSize=0000, md5sum="d41d8cd98f00b204e9800998ecf8427e", sha="da39a3ee5e6b4b0d3255bfef95601890afd80709", ssdeep="3::", date=lipsum_date, analystName=lipsum_word, summary=lipsum, avDefs = {"Symantec": "none", "McAfee":"none"}, filehooking=[lipsum_short, lipsum_short], persistence=[lipsum_short, lipsum_short], spreading_mechs=[lipsum_short, lipsum_short], exfil_mechs=[lipsum_short, lipsum_short], c2_mechs=[lipsum_short, lipsum_short], oss=[lipsum_short, lipsum_short], requiredfiles=[lipsum_short, lipsum_short], secondstages=[lipsum_short, lipsum_short], regkeys=[lipsum_short, lipsum_short], behav_summary=lipsum, logs=[lipsum_short, lipsum_short], strings=[lipsum_short, lipsum_short], other=[lipsum_short, lipsum_short], network_indicators=[lipsum_short, lipsum_short], fs_indicators=[lipsum_short, lipsum_short], mitigation_steps=[lipsum_short, lipsum_short], eradication_steps=[lipsum_short, lipsum_short]):
+	def generateImplantPage(self, intrusionSet="Alpha Alpha", filename="Example.file", filetype="example", fileSize=0000, md5sum="d41d8cd98f00b204e9800998ecf8427e", sha="da39a3ee5e6b4b0d3255bfef95601890afd80709", ssdeep="3::", date=lipsum_date, analystName=lipsum_word, summary=lipsum, avDefs = {"Symantec": "none", "McAfee":"none"}, filehooking=[lipsum_short, lipsum_short], persistence=[lipsum_short, lipsum_short], spreading_mechs=[lipsum_short, lipsum_short], exfil_mechs=[lipsum_short, lipsum_short], c2_mechs=[lipsum_short, lipsum_short], oss=[lipsum_short, lipsum_short], requiredfiles=[lipsum_short, lipsum_short], secondstages=[lipsum_short, lipsum_short], regkeys=[lipsum_short, lipsum_short], behav_summary=lipsum, logs=[lipsum_short, lipsum_short], strings=[lipsum_short, lipsum_short], other=[lipsum_short, lipsum_short], network_indicators=[lipsum_short, lipsum_short], fs_indicators=[lipsum_short, lipsum_short], mitigation_steps=[lipsum_short, lipsum_short], eradication_steps=[lipsum_short, lipsum_short]):
 		"""docstring for generateImplantsPage"""
 		
 		wikitext = "^ Implant Report    | %s: %s |\n" % (intrusionSet, filename)
@@ -354,7 +357,7 @@ class SaphoTemplater(object):
 			
 		return wikitext
 	
-	def generateThreatGroupPage(self, group_name="Alpha", group_summary=lipsum, group_presence=[lipsum_url, lipsum_url], group_type="Unknown", membership=[lipsum_word, lipsum_word], pre_ex_methods=[lipsum_short, lipsum_short], pre_ex_tools=[lipsum_word, lipsum_word], ex_methods=[lipsum_short, lipsum_short], ex_tools=[lipsum_word, lipsum_word], post_ex_methods=[lipsum_short, lipsum_short], post_ex_tools=[lipsum_word, lipsum_word], periods_of_operation=[[lipsum_date, lipsum_date], [lipsum_date, lipsum_date]]):
+	def generateThreatGroupPage(self, group_name="Alpha", group_summary=lipsum, group_presence=[lipsum_url, lipsum_url], group_type="Unknown", membership=["actor:person alpha", "actor:person bravo"], related_groups=["actor:group alpha", "actor:group bravo"], pre_ex_methods=[lipsum_short, lipsum_short], pre_ex_tools=[lipsum_word, lipsum_word], ex_methods=[lipsum_short, lipsum_short], ex_tools=[lipsum_word, lipsum_word], post_ex_methods=[lipsum_short, lipsum_short], post_ex_tools=[lipsum_word, lipsum_word], periods_of_operation=[[lipsum_date, lipsum_date], [lipsum_date, lipsum_date]]):
 		"""Generates Dokuwiki page for profiling a malicious group including key methodologies and tools."""
 		wikitext = "===== Group: %s =====\n" % group_name
 		wikitext += "^ Summary | %s |\n" % group_summary
@@ -447,6 +450,45 @@ class SaphoTemplater(object):
 		
 		return wikitext
 	
+	def initialSetup(self, wiki_url, username, password):
+		"""initialSetup adds the default start page and sample templates to an uninitilized sapho setup"""
+		self.postAsPage(wiki_url, username, password, "start", self.generateWikiStartTemplate())
+		
+		#add Activity Classification
+		#add Wiki Conventions
+		
+		self.postAsPage(wiki_url, username, password, "intrusionset:alpha_alpha", self.generateSetPage())
+		self.postAsPage(wiki_url, username, password, "intrusionset:alpha_bravo", self.generateSetPage())
+		self.postAsPage(wiki_url, username, password, "intrusionset:bravo_alpha", self.generateSetPage())
+		self.postAsPage(wiki_url, username, password, "intrusionset:bravo_bravo", self.generateSetPage())
+		
+		#add Archived Sets page
+		
+		self.postAsPage(wiki_url, username, password, "thirdpartyintel:tpi-alpha", self.generateThirdPartyIntelligencePage())
+		self.postAsPage(wiki_url, username, password, "thirdpartyintel:tpi-bravo", self.generateThirdPartyIntelligencePage())
+		
+		self.postAsPage(wiki_url, username, password, "malcode_exploits:alpha.exploit", self.generateExploitPage())
+		self.postAsPage(wiki_url, username, password, "malcode_exploits:bravo.exploit", self.generateExploitPage())
+		
+		self.postAsPage(wiki_url, username, password, "malcode_implants:alpha.implant", self.generateImplantPage())
+		self.postAsPage(wiki_url, username, password, "malcode_implants:bravo.implant", self.generateImplantPage())
+		
+		#add Utility code page
+		
+		self.postAsPage(wiki_url, username, password, "actor:Group Alpha", self.generateThreatGroupPage())
+		self.postAsPage(wiki_url, username, password, "actor:Group Bravo", self.generateThreatGroupPage())
+		
+		self.postAsPage(wiki_url, username, password, "actor:Person Alpha", self.generateThreatActorPage())
+		self.postAsPage(wiki_url, username, password, "actor:Person Bravo", self.generateThreatActorPage())
+		
+		self.postAsPage(wiki_url, username, password, "template:Intrusion Set Page", self.generateSetPage())
+		self.postAsPage(wiki_url, username, password, "template:Third Party Intelligence Page", self.generateThirdPartyIntelligencePage())
+		self.postAsPage(wiki_url, username, password, "template:Exploit Page", self.generateExploitPage())
+		self.postAsPage(wiki_url, username, password, "template:Implant Page", self.generateImplantPage())
+		self.postAsPage(wiki_url, username, password, "template:Malicious Group Page", self.generateThreatGroupPage())
+		self.postAsPage(wiki_url, username, password, "template:Malicious Actor Page", self.generateThreatActorPage())
+		
+	
 	# Common Elements Generators
 	def generateNewsArticlePage(self, title=lipsum_word, author=lipsum_word, date="20000101", url=lipsum_url, article_body=lipsum):
 		wikitext = "==== %s ====\n" % title
@@ -463,12 +505,13 @@ class SaphoTemplater(object):
 	def postAsPage(self, url, username, password, pagename, wikitext):
 		"""Post wikitext to preset dokuwiki as page pagename."""
 		
-		print "Posting %s" % pagename
 		try:
-			wiki = dokuwikixmlrpc.DokuWikiClient(url, username, password)
-			print wiki.put_page(page, wikitext)
+			wiki = DokuWikiClient(url, username, password)
+			wiki.put_page(pagename, wikitext)
+			print "Page %s posted" % pagename
 		except Exception as e:
-			print 
+			print "Error: %s" % e
+			
 	
 
 class Usage(Exception):
@@ -504,19 +547,21 @@ def main(argv=None):
 			if option in ("-h", "--help"):
 				raise Usage(help_message)
 			if option in ("-w", "--wiki"):
-				wiki = value
+				wiki_url = value
 			if option in ("-u", "--user"):
-				user = value
+				username = value
 			if option in ("-p", "--pass"):
 				password = value
-			if (wiki == False or username == False or password == False) and to_file == False:
-				to_screen = True
+			
+		if (wiki_url == False or username == False or password == False) and to_file == False:
+			to_screen = True
 	except Usage, err:
 		print >> sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg)
 		print >> sys.stderr, "\t for help use --help"
 		return 2
 	
-	
+	wiki = SaphoTemplater()
+	wiki.initialSetup(wiki_url, username, password)
 
 
 if __name__ == "__main__":
