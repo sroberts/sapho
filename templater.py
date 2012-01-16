@@ -155,18 +155,18 @@ class SaphoTemplater(object):
 		
 		wikitext += "====== Intrusion Campaigns ======\n"
 		wikitext += "===== Alpha Campaign =====\n"
-		wikitext += "  * [[intrusionset:Alpha Alpha]] - **Date Identified:** -\n"
-		wikitext += "  * [[intrusionset:Alpha Bravo]] - **Date Identified:** -\n"
+		wikitext += "  * [[intrusionset:Alpha Alpha]] - **Date Identified:** 19990101\n"
+		wikitext += "  * [[intrusionset:Alpha Bravo]] - **Date Identified:** 19990101\n"
 		wikitext += "**C2:** - **Exfil:** -"
 		wikitext += "===== Bravo Campaign =====\n"
-		wikitext += "  * [[intrusionset:Bravo Alpha]] - **Date Identified:** -\n"
-		wikitext += "  * [[intrusionset:Bravo Bravo]] - **Date Identified:** -\n"
+		wikitext += "  * [[intrusionset:Bravo Alpha]] - **Date Identified:** 19990101\n"
+		wikitext += "  * [[intrusionset:Bravo Bravo]] - **Date Identified:** 19990101\n"
 		wikitext += "**C2:** - **Exfil:** -\n"
 		wikitext += "\n[[intrusionset:Archived Intrusion Sets]]\n"
 		
 		wikitext += "====== Third Party Intelligence ======\n"
-		wikitext += "  * [[thirdpartyintel:TPI-Alpha]] - **Date Received:** -\n"
-		wikitext += "  * [[thirdpartyintel:TPI-Bravo]] - **Date Received:** -\n"
+		wikitext += "  * [[thirdpartyintel:TPI-Alpha]] - **Date Received:** 19990101\n"
+		wikitext += "  * [[thirdpartyintel:TPI-Bravo]] - **Date Received:** 19990101\n"
 		wikitext += "  * [[thirdpartyintel:Archived Third Party Intelligence]]\n"
 		
 		wikitext += "====== Known Malicious Tools ======\n"
@@ -504,8 +504,14 @@ class SaphoTemplater(object):
 		
 		try:
 			wiki = DokuWikiClient(url, username, password)
-			wiki.put_page(pagename, wikitext)
+			
+			if wikitext in ["template:Intrusion Set Page", "template:Third Party Intelligence Page", "template:Exploit Page", "template:Implant Page", "template:Malicious Group Page", "template:Malicious Actor Page"]:
+				wiki.put_page(pagename, wiki.page(wikitext))
+			else:
+				wiki.put_page(pagename, wikitext)
+			
 			print "Page [[%s]] posted" % pagename
+		
 		except Exception as e:
 			print "Error: %s" % e
 			
@@ -517,6 +523,17 @@ class Usage(Exception):
 	
 
 # Client Code
+
+def post_original_templates(self, arg):
+	"""docstring for post_original_templates"""
+	pass
+
+def post_modified_templates(self, arg):
+	"""docstring for post_modified_templates"""
+	pass
+
+
+
 help_message = '''
 Sapho Templater is for automatically generating, populating, and posting Sapho wiki pages to a Dokuwiki implimentation. This takes a lot of the pain out of generating a new page.
 
@@ -528,8 +545,8 @@ Program Options:
 \t-s			to screen: will print template(s) to the screen
 
 Sapho:
-\t--setup		Installs complete sapho wiki including sample pages and templates (requires wiki, username, password)
-\t--template		Posts a single page based on a template. Specify title as an argument, then select a template (--page "Alpha Alpha")
+\t--setup		Installs complete sapho wiki including sample pages and templates (requires wiki, username, password).
+\t--template	Posts a single page based on a current template. Specify title as an argument "Alpha Alpha", then select a template. Use "-o" or "--original" to get original templates.
 '''
 
 def main(argv=None):
@@ -538,7 +555,7 @@ def main(argv=None):
 		argv = sys.argv
 	try:
 		try:
-			opts, args = getopt.getopt(argv[1:], "hiw:u:p:v", ["help", "wiki=", "user=", "pass=", "setup", "template=", "title=", "print="])
+			opts, args = getopt.getopt(argv[1:], "hiw:u:p:vo", ["help", "wiki=", "user=", "pass=", "setup", "template=", "title=", "print=", "original"])
 		except getopt.error, msg:
 			raise Usage(msg)
 		
@@ -547,6 +564,7 @@ def main(argv=None):
 		username = None 
 		password = None
 		setup_to_wiki = False
+		original = False
 		page_title = ""
 		wiki = SaphoTemplater()
 		
@@ -567,6 +585,8 @@ def main(argv=None):
 				username = value
 			if option in ("-p", "--pass"):
 				password = value
+			if option in ("-o", "--original"):
+				original = True
 			if option in ("--setup"):
 				setup_to_wiki = True
 			if option in ("--template"):
@@ -576,14 +596,14 @@ def main(argv=None):
 			to_screen = True
 		elif setup_to_wiki == True:
 			wiki.initialSetup(wiki_url, username, password)
-		elif page_title:
-			print "Select a template for page %s:" % value
-			print "\t1) template:Intrusion Set Page"
-			print "\t2) template:Third Party Intelligence Page"
-			print "\t3) template:Exploit Page"
-			print "\t4) template:Implant Page"
-			print "\t5) template:Malicious Group Page"
-			print "\t6) template:Malicious Actor Page"
+		elif page_title and original == True:
+			print "Select an original template for page %s:" % value
+			print "\t1) Intrusion Set Page"
+			print "\t2) Third Party Intelligence Page"
+			print "\t3) Exploit Page"
+			print "\t4) Implant Page"
+			print "\t5) Malicious Group Page"
+			print "\t6) Malicious Actor Page"
 			
 			page_to_wiki = input("Template: ")
 			
@@ -601,7 +621,29 @@ def main(argv=None):
 				wiki.postAsPage(wiki_url, username, password, "actor:%s" % page_title, wiki.generateThreatActorPage())
 			else:
 				raise Usage("Invalid template selected")
-				
+		elif page_title and original == False:
+			print "Select your template for page %s:" % value
+			print "\t1) Intrusion Set Page"
+			print "\t2) Third Party Intelligence Page"
+			print "\t3) Exploit Page"
+			print "\t4) Implant Page"
+			print "\t5) Malicious Group Page"
+			print "\t6) Malicious Actor Page" 
+			
+			page_to_wiki = input("Template: ")
+			
+			if page_to_wiki == 1:
+				wiki.postAsPage(wiki_url, username, password, "intrusionset:%s" % page_title, "template:Intrusion Set Page")
+			elif page_to_wiki == 2:
+				wiki.postAsPage(wiki_url, username, password, "thirdpartyintel:%s" % page_title, "template:Third Party Intelligence Page")
+			elif page_to_wiki == 3:
+				wiki.postAsPage(wiki_url, username, password, "malcode_exploits:%s" % page_title, "template:Exploit Page")
+			elif page_to_wiki == 4:
+				wiki.postAsPage(wiki_url, username, password, "malcode_implants:%s" % page_title, "template:Implant Page")
+			elif page_to_wiki == 5:
+				wiki.postAsPage(wiki_url, username, password, "actor:%s" % page_title, "template:Malicious Group Page")
+			elif page_to_wiki == 6:
+				wiki.postAsPage(wiki_url, username, password, "actor:%s" % page_title, "template:Malicious Actor Page")
 			
 	except Usage, err:
 		print >> sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg)
