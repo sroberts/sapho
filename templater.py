@@ -458,6 +458,7 @@ class SaphoTemplater(object):
 		
 		#add Activity Classification
 		#add Wiki Conventions
+		#add Suggested Reading
 		
 		self.postAsPage(wiki_url, username, password, "intrusionset:alpha_alpha", self.generateSetPage())
 		self.postAsPage(wiki_url, username, password, "intrusionset:alpha_bravo", self.generateSetPage())
