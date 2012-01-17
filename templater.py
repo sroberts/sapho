@@ -174,7 +174,7 @@ class SaphoTemplater(object):
 		wikitext += "  * [[thirdpartyintel:TPI-Bravo]] - **Date Received:** 19990101\n"
 		wikitext += "  * [[thirdpartyintel:Archived Third Party Intelligence]]\n"
 		
-		wikitext += "====== Known Malicious Tools ======\n"
+		wikitext += "====== Malicious Tools ======\n"
 		wikitext += "===== Exploits =====\n"
 		wikitext += "  * [[malcode_exploits:Alpha.exploit]] - Exploitation tool Alpha.\n"
 		wikitext += "  * [[malcode_exploits:Bravo.exploit]] - Exploitation tool Bravo.\n"
@@ -187,11 +187,11 @@ class SaphoTemplater(object):
 		wikitext += "  * [[malcode_utilities:Alpha.util]] - Alpha.util summary.\n"
 		wikitext += "  * [[malcode_utilities:Bravo.util]] - Bravo.util summary.\n"
 		
-		wikitext += "====== Known Threat Actors ======\n"
-		wikitext += "===== Known Threat Groups =====\n"
+		wikitext += "====== Threat Actors ======\n"
+		wikitext += "===== Threat Groups =====\n"
 		wikitext += "  * [[actor:Group Alpha]] - Prefix: Alpha\n"
 		wikitext += "  * [[actor:Group Bravo]] - Prefix: Bravo\n"
-		wikitext += "===== Known Threat Actors =====\n"
+		wikitext += "===== Threat Actors =====\n"
 		wikitext += "  * [[actor:Person Alpha]]  - Prefix: Alpha\n"
 		wikitext += "  * [[actor:Person Bravo]]  - Prefix: Alpha\n"
 		
