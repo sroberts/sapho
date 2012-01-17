@@ -20,6 +20,7 @@ lipsum_date = "19990101" #sample date in YYYYMMDD format
 lipsum_datetime = "19990101 12:00:00" #sample date in YYYYMMDD HH:MM:SS format
 lipsum_url = "http://www.example.com"
 lipsum_email = "sample@example.com"
+lipsum_ip = "192.168.1.1"
 	
 # Wiki Classes
 class SaphoTemplater(object):
