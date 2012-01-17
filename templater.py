@@ -148,6 +148,7 @@ class SaphoTemplater(object):
 		wikitext += "===== Terms and Processes =====\n"
 		wikitext += "  * [[Activity Classification]]\n"
 		wikitext += "  * [[Wiki Conventions]]\n"
+		wikitext += "  * [[Suggested Reading]]\n"
 		
 		wikitext += "====== News ======\n"
 		wikitext += "===== SANS ISC =====\n"
