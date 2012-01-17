@@ -359,6 +359,46 @@ class SaphoTemplater(object):
 			
 		return wikitext
 	
+	def generateUtilityPage(intrusionSet="Alpha Alpha", filename="Example.file", filetype="example", fileSize=0000, md5sum="d41d8cd98f00b204e9800998ecf8427e", sha="da39a3ee5e6b4b0d3255bfef95601890afd80709", ssdeep="3::", date=lipsum_date, summary=lipsum, avDefs = {"Symantec": "none", "McAfee":"none"}, network_indicators=[lipsum_short, lipsum_short], fs_indicators=[lipsum_short, lipsum_short], mitigation_steps=[lipsum_short, lipsum_short], eradication_steps=[lipsum_short, lipsum_short]):
+		"""docstring for generateImplantsPage"""
+
+		wikitext = "===== Summary: =====\n"
+		wikitext += "%s\n" % (summary)
+
+		wikitext += "===== Identification =====\n"
+		wikitext += "^ File Name | %s |\n" % (filename)
+		wikitext += "^ File Type | %s |\n" % (filetype)
+		wikitext += "^ File Size | %s |\n" % (str(fileSize))
+		wikitext += "^ MD5	   | %s |\n" % (md5sum)
+		wikitext += "^ SHA	   | %s |\n" % (sha)
+		wikitext += "^ Ssdeep	| %s |\n" % (ssdeep)
+		wikitext += "^ Associated FO Set | %s |\n" % (intrusionSet)
+
+		wikitext += "====Current anti-virus detection capabilities:====\n"
+		for vendor in avDefs:
+			wikitext += "^ %s | %s |\n" % (vendor, avDefs[vendor])
+
+		wikitext += "===== Recommendations =====\n"
+		wikitext += "==== Identification ====\n"	
+		wikitext += "=== Network Indicators ===\n"
+		for network_indicator in network_indicators:
+			wikitext += "  * %s\n" % (network_indicator)
+
+		wikitext += "=== File System Indicators ===\n"
+		for fs_indicator in fs_indicators:
+			wikitext += "  * %s\n" % (fs_indicator)
+
+		wikitext += "==== Mitigation ====\n"
+		wikitext += "=== Containment Steps ====\n"
+		for mitigation_step in mitigation_steps:
+			wikitext += "  * %s\n" % (mitigation_step)
+
+		wikitext += "=== Eradication Steps ====\n"
+		for eradication_step in eradication_steps:
+			wikitext += "  * %s\n" % (eradication_step)
+
+		return wikitext
+	
 	def generateThreatGroupPage(self, group_name="Alpha", group_summary=lipsum, group_presence=[lipsum_url, lipsum_url], group_type="Unknown", membership=["actor:person alpha", "actor:person bravo"], related_groups=["actor:group alpha", "actor:group bravo"], pre_ex_methods=[lipsum_short, lipsum_short], pre_ex_tools=[lipsum_word, lipsum_word], ex_methods=[lipsum_short, lipsum_short], ex_tools=[lipsum_word, lipsum_word], post_ex_methods=[lipsum_short, lipsum_short], post_ex_tools=[lipsum_word, lipsum_word], periods_of_operation=[[lipsum_date, lipsum_date], [lipsum_date, lipsum_date]]):
 		"""Generates Dokuwiki page for profiling a malicious group including key methodologies and tools."""
 		wikitext = "===== Group: %s =====\n" % group_name
@@ -476,7 +516,8 @@ class SaphoTemplater(object):
 		self.postAsPage(wiki_url, username, password, "malcode_implants:alpha.implant", self.generateImplantPage())
 		self.postAsPage(wiki_url, username, password, "malcode_implants:bravo.implant", self.generateImplantPage())
 		
-		#add Utility code page
+		self.postAsPage(wiki_url, username, password, "malcode_utilities:alpha.util", generateUtilityPage())
+		self.postAsPage(wiki_url, username, password, "malcode_utilities:bravo.util", generateUtilityPage())
 		
 		self.postAsPage(wiki_url, username, password, "actor:Group Alpha", self.generateThreatGroupPage())
 		self.postAsPage(wiki_url, username, password, "actor:Group Bravo", self.generateThreatGroupPage())
