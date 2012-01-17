@@ -18,9 +18,10 @@ lipsum_short = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
 lipsum_word = "Lorem ipsum"
 lipsum_date = "19990101" #sample date in YYYYMMDD format
 lipsum_datetime = "19990101 12:00:00" #sample date in YYYYMMDD HH:MM:SS format
+lipsum_ip = "192.168.1.1"
 lipsum_url = "http://www.example.com"
 lipsum_email = "sample@example.com"
-lipsum_ip = "192.168.1.1"
+lipsum_num = 0000
 	
 # Wiki Classes
 class SaphoTemplater(object):
@@ -489,6 +490,7 @@ class SaphoTemplater(object):
 	
 	# Common Elements Generators
 	def generateNewsArticlePage(self, title=lipsum_word, author=lipsum_word, date="20000101", url=lipsum_url, article_body=lipsum):
+		"""Creates wikitext for news article."""
 		wikitext = "==== %s ====\n" % title
 		wikitext += "^ Author | %s |\n" % author
 		wikitext += "^ Date   | %s |\n" % date
@@ -497,6 +499,89 @@ class SaphoTemplater(object):
 		for line in article_body.split("\n"):
 			wikitext += "> %s\n" % line
 			
+		return wikitext
+	
+	def generateIpHeaderWikiText(self, version=lipsum_word, ihl=lipsum_word, typeOfService=lipsum_num, totalLength=lipsum_num, identification=lipsum_num, flags=lipsum_word, fragmentOffset=lipsum_num, ttl=lipsum_num, protocol=lipsum_num, headerChecksum=lipsum_word, sip=lipsum_ip, dip=lipsum_ip, options=lipsum_word, padding=lipsum_num):
+		"""Creates wikitext for IPv4 header information."""
+		
+		wikitext = "=== IP Header ===\n"
+		wikitext += "^  Version  ^  IHL  ^  Type of Service  ^  Total Length  ^\n"
+		wikitext += "|  %s  |  %s  |  %s  |  %s  |\n" % (version, ihl, typeOfService, totalLength)
+		wikitext += "^  Identification  ^^  Flags  ^  Fragment Offset  ^\n"
+		wikitext += "|  %s  ||  %s  |  %s  |\n" % (identification, flags, fragmentOffset)
+		wikitext += "^  Time To Live  ^  Protocol  ^  Header Checksum  ^^\n"
+		wikitext += "|  %s  |  %s  |  %s  ||\n" % (ttl, protocol, headerChecksum)
+		wikitext += "^  Source IP Address  ^^^^\n"
+		wikitext += "|  %s  ||||\n" % (sip)
+		wikitext += "^  Destination IP Address  ^^^^\n"
+		wikitext += "|  %s  ||||\n" % (dip)
+		wikitext += "^  Options  ^^^  Padding  ^\n"
+		wikitext += "|  %s  |||  %s  |\n" % (options, padding)
+		
+		return wikitext
+		
+	def generateIcmpHeaderWikiText(self, icmpType="1", icmpCode="1", checksum=lipsum_word, restOfHeader=lipsum_short):
+		"""Creates wikitext for ICMP header information."""
+		
+		wikitext = "=== ICMP Header ===\n"
+		wikitext += "^  Type  ^  Code  ^  Checksum  ^\n"
+		wikitext += "|  %s  |  %s  |  %s  |\n" % (icmpType, icmpCode, checksum)
+		wikitext += "^  Rest of Header  ^^^\n"
+		wikitext += "|  %s  |||\n" % (restOfHeader)
+		
+		return wikitext
+		
+	def generateIpv4TcpHeaderWikiText(self, sip=lipsum_ip, dip=lipsum_ip, seqNum=lipsum_num, ackNum=lipsum_num, dataOffset=lipsum_num, reserved="", urg="0", ack="0", psh="0", rst="0", syn="0", fin="0", window=lipsum_num, checksum=lipsum_num, urgentPointer=lipsum_num, options=lipsum_word, padding=lipsum_num, data=lipsum_short):
+		"""Creates wikitext for IPv4 TCP header information."""
+		
+		wikitext = "=== IPv4 TCP Header ===\n"
+		wikitext += "^  Source Port  ^  Destination Port  ^^^^^^^^\n"
+		wikitext += "|  %s  |  %s  ||||||||\n" % (sip, dip)
+		wikitext += "^  Sequence Number  ^^^^^^^^^\n"
+		wikitext += "|  %s  |||||||||\n" % (seqNum)
+		wikitext += "^  Acknowledgement Number  ^^^^^^^^^\n"
+		wikitext += "|  %s  |||||||||\n" % (ackNum)
+		wikitext += "^  Data Offset  ^  Reserved  ^  URG  ^ ACK ^ PSH ^ RST ^ SYN ^ FIN ^ Window ^\n"
+		wikitext += "|  %s  |  %s  |  %s  |  %s  |  %s  |  %s  |  %s  |  %s  |  %s  |\n" % (dataOffset, reserved, urg, ack, psh, rst, syn, fin, window)
+		wikitext += "^  Checksum  ^^^^^^^^  Urgent Pointer  ^\n"
+		wikitext += "|  %s  ||||||||  %s  |\n" % (checksum, urgentPointer)
+		wikitext += "^  Options  ^^^^^^^^^\n"
+		wikitext += "|  %s  |||||||||\n" % (options)
+		wikitext += "^  Padding  ^^^^^^^^^\n"
+		wikitext += "|  %s  |||||||||\n" % (padding)
+		wikitext += "^  data  ^^^^^^^^^\n"
+		wikitext += "|  %s  |||||||||\n" % (data)
+		
+		return wikitext
+		
+	def generateIpv4UdpHeaderWikiText(self, sip=lipsum_ip, dip=lipsum_ip, length=lipsum_num, checksum=lipsum_num, data=lipsum_short):
+		"""Creates wikitext for IPv4 UDP header information."""
+		
+		wikitext = "=== IPv4 UDP Header ===\n"
+		wikitext += "^  Source Port Number  ^  Destination Port  ^\n"
+		wikitext += "|  %s  |  %s  |\n" % (sip, dip)
+		wikitext += "^  Length  ^  Checksum  ^\n"
+		wikitext += "|  %s  |  %s  |\n" % (length, checksum)
+		wikitext += "^  data  ^^\n"
+		wikitext += "|  %s  ||\n" % (data)
+		
+		return wikitext
+		
+	def generateL2tpHeaderWikiText(self, flagsAndVerInfo=lipsum_word, length=lipsum_num, tunnelId=lipsum_num, sessionId=lipsum_num, ns=lipsum_num, nr=lipsum_num, offsetSize=lipsum_num, offsetPad=lipsum_num, payloadData=lipsum_short):
+		"""Creates wikitext for L2TP header information."""
+		
+		wikitext = "=== L2TP  ===\n"
+		wikitext += "^  Flags and Version Info  ^  Length (opt)  ^\n"
+		wikitext += "|  %s  |  %s  |\n" % (flagsAndVerInfo, length)
+		wikitext += "^  Tunnel Id  ^  Session ID  ^\n"
+		wikitext += "|  %s  |  %s  |\n" % (tunnelId, sessionId)
+		wikitext += "^  Ns (opt)  ^  Nr (opt)  ^\n"
+		wikitext += "|  %s  |  %s  |\n" % (ns, nr)
+		wikitext += "^  Offset Size (opt)  ^  Offset Pad (opt)  ^\n"
+		wikitext += "|  %s  |  %s  |\n" % (offsetSize, offsetPad)
+		wikitext += "^  Payload data  ^^\n"
+		wikitext += "|  %s  ||\n" % (payloadData)
+		
 		return wikitext
 	
 	# Wiki Methods
