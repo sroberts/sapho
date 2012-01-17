@@ -152,6 +152,8 @@ class SaphoTemplater(object):
 		wikitext += "====== News ======\n"
 		wikitext += "===== SANS ISC =====\n"
 		wikitext += "{{rss>http://isc.sans.edu/rssfeed_full.xml 5 author date 1h }}\n"
+		wikitext += "===== US-CERT: Technical Security Alerts =====\n"
+		wikitext += "{{rss>https://www.us-cert.gov/channels/techalerts.rdf 5 author date 1h }}\n"
 		wikitext += "===== Team Cymru =====\n"
 		wikitext += "{{rss>http://www.team-cymru.org/News/secnews.rss 5 author date 1h }}\n"
 		
