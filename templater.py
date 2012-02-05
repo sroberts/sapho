@@ -20,6 +20,7 @@ lipsum_date = "19990101" #sample date in YYYYMMDD format
 lipsum_datetime = "19990101 12:00:00" #sample date in YYYYMMDD HH:MM:SS format
 lipsum_url = "http://www.example.com"
 lipsum_email = "sample@example.com"
+lipsum_geo = {'city': lipsum_word, 'region_name': lipsum_word, 'region': '00', 'area_code': 0, 'time_zone': lipsum_word, 'longitude': 0.0, 'metro_code': 0, 'country_code3': 'AAA', 'latitude': 0.0, 'postal_code': None, 'dma_code': 0, 'country_code': 'AA', 'country_name': lipsum_word}
 	
 # Wiki Classes
 class SaphoTemplater(object):
