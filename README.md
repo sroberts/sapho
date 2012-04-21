@@ -1,0 +1,14 @@
+# Summary
+Sapho was built as an off hours project to manage considerable intelligence developed from computer network defense. Building up on the considerable resources of [DokuWiki](http://dokuwiki.org), Sapho automatically generates a framework of wiki resources for capturing and analyzing cyber threat intelligence and responding.
+
+# Information
+For information about installation, usage, contributions, etc., see the project site at http://sroberts.github.com/sapho/.
+
+# Authors
+
+* Scott J Roberts - http://www.togafoamparty.com - [@sroberts](https://twitter.com/sroberts)
+
+# Project Contact Information
+
+* sapho@togafoamparty.com
+* [@saphothreat](https://twitter.com/saphothreat)
