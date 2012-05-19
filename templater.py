@@ -19,9 +19,11 @@ lipsum_word = "Lorem ipsum"
 lipsum_date = "19990101" #sample date in YYYYMMDD format
 lipsum_datetime = "19990101 12:00:00" #sample date in YYYYMMDD HH:MM:SS format
 lipsum_url = "http://www.example.com"
+lipsum_ip = "127.0.0.1"
 lipsum_email = "sample@example.com"
-lipsum_geo = {'city': lipsum_word, 'region_name': lipsum_word, 'region': '00', 'area_code': 0, 'time_zone': lipsum_word, 'longitude': 0.0, 'metro_code': 0, 'country_code3': 'AAA', 'latitude': 0.0, 'postal_code': None, 'dma_code': 0, 'country_code': 'AA', 'country_name': lipsum_word}
-	
+lipsum_geo = {'city': lipsum_word, 'region_name': lipsum_word, 'region': lipsum_word, 'area_code': 0, 'time_zone': lipsum_word, 'longitude': 0.0, 'metro_code': 0, 'country_code3': 'AAA', 'latitude': 0.0, 'postal_code': None, 'dma_code': 0, 'country_code': 'AA', 'country_name': lipsum_word}
+lipsum_whois_summary = {'ip_asn': 0, 'ip_address': lipsum_ip, 'ip_bgpprefix': lipsum_ip + "/0", 'ip_cc': "AA", 'ip_registry': lipsum_word, 'ip_allocateddate': lipsum_date, 'ip_as_name': lipsum_word}
+
 # Wiki Classes
 class SaphoTemplater(object):
 	
@@ -448,6 +450,51 @@ class SaphoTemplater(object):
 		
 		return wikitext
 	
+	def generateIpPage(self, ip_address=lipsum_ip, ip_maltego_file=None, ip_nslookup="No NSLookup Data Found", ip_geo=lipsum_geo, ip_whois_summary=lipsum_whois_summary, ip_whois_full=lipsum):
+		"""Allows programatic generation of page for a known bad IP address."""
+		
+		wikitext = ""		
+		wikitext += "This is a summary of open source intelligence regarding IP Address: %s.\n" % (ip_address)
+
+		wikitext += "====== Maltego Summary ======\n"
+		# Upload File
+		wikitext += "No Maltego file provided. Please input manually.\n"
+
+		wikitext += "====== NSLookup Information ======\n"
+		wikitext += "<code>%s</code>\n" % (ip_nslookup)
+
+		wikitext += "====== Location ======\n"
+		wikitext += "%s, %s, %s\n" % (ip_geo['city'], ip_geo['region'], ip_geo['country_name'])
+
+		wikitext += "===== Extended Geographic Information =====\n"
+		wikitext += "^ City         | %s |\n" % ip_geo['city']
+		wikitext += "^ Postal Code  | %s |\n" % ip_geo['postal_code']
+		wikitext += "^ Metro Code   | %s |\n" % ip_geo['metro_code']
+		wikitext += "^ Region       | %s |\n" % ip_geo['region']
+		wikitext += "^ Area Code    | %s |\n" % ip_geo['area_code']
+		wikitext += "^ Country Name | %s |\n" % ip_geo['country_name']
+		wikitext += "^ Country Code | %s |\n" % ip_geo['country_code']
+		wikitext += "^ Longitude    | %s |\n" % ip_geo['longitude']
+		wikitext += "^ Latitude     | %s |\n" % ip_geo['latitude']
+		wikitext += "^ Time Zone    | %s |\n" % ip_geo['time_zone']
+
+		wikitext += "====== Whois Information ======\n"
+		wikitext += "^ AS ^ IP ^ BGP Prefix ^ CC ^ Registry ^ Allocated ^ AS Name ^\n" 
+		wikitext += "| %s | %s | %s         | %s | %s       | %s         | %s      |\n" % (ip_whois_summary['ip_asn'], ip_whois_summary['ip_address'], ip_whois_summary['ip_bgpprefix'], ip_whois_summary['ip_cc'], ip_whois_summary['ip_registry'], ip_whois_summary['ip_allocateddate'], ip_whois_summary['ip_as_name'])
+
+		wikitext += "==== Full Whois Information =====\n"
+		wikitext += "<code>%s</code>\n" % ip_whois_full
+
+		wikitext += "====== Research Links ======\n"
+		wikitext += "^ Robtext              | [[http://www.robtex.com/ip/%s.html#ip|%s]] |\n" % (ip_address, ip_address)
+		wikitext += "^ CentralOps           | [[http://centralops.net/co/DomainDossier.aspx?addr=%s&dom_dns=1&dom_whois=1&net_whois=1|%s]] |\n" % (ip_address, ip_address)
+		wikitext += "^ DomainTools          | [[http://whois.domaintools.com/%s|%s]] |\n" % (ip_address, ip_address)
+		wikitext += "^ Google Safe Browsing | [[http://www.google.com/safebrowsing/diagnostic?site=%s|%s]] |\n" % (ip_address, ip_address)
+		wikitext += "^ SenderBase           | [[http://www.senderbase.org/senderbase_queries/detailip?search_string=%s|%s]] |\n" % (ip_address, ip_address)
+
+		return wikitext
+	
+
 	def initialSetup(self, wiki_url, username, password):
 		"""initialSetup adds the default start page and sample templates to an uninitilized sapho setup"""
 		self.postAsPage(wiki_url, username, password, "start", self.generateWikiStartTemplate())

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-sapho:network_research.py
+sapho: network_research.py
 
 Created by Scott J. Roberts on 2012-01-10.
 Copyright (c) 2012 TogaFoamParty Studios. All rights reserved.
@@ -19,6 +19,7 @@ class SaphoNetworkResearch(object):
 	
 	def generate_ip_page(self, ip):
 		"""docstring for generate_ip_page"""
+		
 		pass
 	
 	def generate_url_page(self, url):
