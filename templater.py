@@ -447,6 +447,99 @@ class SaphoTemplater(object):
 		
 		return wikitext
 	
+	def printer(self, location="./"):
+		"""printer dumps all pages as sample templates to the given directory"""
+		f = open(location + "start", "w")
+		f.write(self.generateWikiStartTemplate())
+		f.close()
+
+		#add Activity Classification
+		#add Wiki Conventions
+
+		f = open(location + "intrusionset-alpha-alpha", "w")
+		f.write(self.generateSetPage())
+		f.close()
+
+		f = open(location + "intrusionset-alpha-bravo", "w")
+		f.write(self.generateSetPage())
+		f.close()
+
+		f = open(location + "intrusionset-bravo-alpha", "w")
+		f.write(self.generateSetPage())
+		f.close()
+
+		f = open(location + "intrusionset-bravo-bravo", "w")
+		f.write(self.generateSetPage())
+		f.close()
+
+		#add Archived Sets page
+		f = open(location + "thirdpartyintel-tpi-alpha", "w")
+		f.write(self.generateThirdPartyIntelligencePage())
+		f.close()
+
+		f = open(location + "thirdpartyintel-tpi-bravo", "w")
+		f.write(self.generateThirdPartyIntelligencePage())
+		f.close()
+
+		f = open(location + "malcode-exploits-alpha.exploit", "w")
+		f.write(self.generateExploitPage())
+		f.close()
+
+		f = open(location + "malcode-exploits-bravo.exploit", "w")
+		f.write(self.generateExploitPage())
+		f.close()
+
+		f = open(location + "malcode-implants-alpha.implant", "w")
+		f.write(self.generateImplantPage())
+		f.close()
+
+		f = open(location + "malcode-implants-bravo.implant", "w")
+		f.write(self.generateImplantPage())
+		f.close()
+
+		#add Utility code page
+
+		f = open(location + "actor-Group_Alpha", "w")
+		f.write(self.generateThreatGroupPage())
+		f.close()
+
+		f = open(location + "actor-Group_Bravo", "w")
+		f.write(self.generateThreatGroupPage())
+		f.close()
+
+		f = open(location + "actor-Person_Alpha", "w")
+		f.write(self.generateThreatActorPage())
+		f.close()
+
+		f = open(location + "actor-Person_Bravo", "w")
+		f.write(self.generateThreatActorPage())
+		f.close()
+
+		f = open(location + "template-Intrusion_Set_Page", "w")
+		f.write(self.generateSetPage())
+		f.close()
+
+		f = open(location + "template-Third Party Intelligence Page", "w")
+		f.write(self.generateThirdPartyIntelligencePage())
+		f.close()
+
+		f = open(location + "template-Exploit_Page"
+		f.write(self.generateExploitPage())
+		f.close()
+
+		f = open(location + "template-Implant_Page", "w")
+		f.write(self.generateImplantPage())
+		f.close()
+
+		f = open(location + "template-Malicious_Group_Page", "w")
+		f.close()
+		f.write(self.generateThreatGroupPage())
+
+		f = open(location + "template-Malicious_Actor_Page", "w")
+		f.write(self.generateThreatActorPage())
+		f.close()
+		
+
 	def initialSetup(self, wiki_url, username, password):
 		"""initialSetup adds the default start page and sample templates to an uninitilized sapho setup"""
 		self.postAsPage(wiki_url, username, password, "start", self.generateWikiStartTemplate())
@@ -538,7 +631,7 @@ def main(argv=None):
 		argv = sys.argv
 	try:
 		try:
-			opts, args = getopt.getopt(argv[1:], "hiw:u:p:v", ["help", "wiki=", "user=", "pass=", "setup", "template=", "title=", "print="])
+			opts, args = getopt.getopt(argv[1:], "dhiw:u:p:v", ["dump", "help", "wiki=", "user=", "pass=", "setup", "template=", "title=", "print="])
 		except getopt.error, msg:
 			raise Usage(msg)
 		
@@ -571,6 +664,8 @@ def main(argv=None):
 				setup_to_wiki = True
 			if option in ("--template"):
 				page_title = value
+			if option in ("-d", "dump")
+				print "Dumping pages"
 			
 		if (wiki_url == False or username == False or password == False) and to_file == False:
 			to_screen = True
