@@ -10,7 +10,11 @@ Copyright (c) 2011 TogaFoamParty Studios. All rights reserved.
 import sys
 import getopt
 import datetime
-from dokuwikixmlrpc import *
+try:
+	from dokuwikixmlrpc import *
+	post = True
+except:
+	post = False
 
 # Filler text pulled from http://www.lipsum.com except date, url, email
 lipsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -523,7 +527,7 @@ class SaphoTemplater(object):
 		f.write(self.generateThirdPartyIntelligencePage())
 		f.close()
 
-		f = open(location + "template-Exploit_Page"
+		f = open(location + "template-Exploit_Page", "w")
 		f.write(self.generateExploitPage())
 		f.close()
 
@@ -532,8 +536,8 @@ class SaphoTemplater(object):
 		f.close()
 
 		f = open(location + "template-Malicious_Group_Page", "w")
-		f.close()
 		f.write(self.generateThreatGroupPage())
+		f.close()
 
 		f = open(location + "template-Malicious_Actor_Page", "w")
 		f.write(self.generateThreatActorPage())
@@ -664,8 +668,9 @@ def main(argv=None):
 				setup_to_wiki = True
 			if option in ("--template"):
 				page_title = value
-			if option in ("-d", "dump")
+			if option in ("-d", "dump"):
 				print "Dumping pages"
+				wiki.printer()
 			
 		if (wiki_url == False or username == False or password == False) and to_file == False:
 			to_screen = True
